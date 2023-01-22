@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl('')
   })
-  constructor(public firebaseService : FirebaseService) {
+  constructor(private asf: AngularFirestore, public firebaseService : FirebaseService) {
 
   }
   async onSignin(email:string,password:string){
@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  async onSignup(email:string,password:string){
-    await this.firebaseService.signup(email,password)
+  async onSignup(email:string,password:string, person:any){
+    await this.firebaseService.signup(email,password, person)
     .then(() => {
       sessionStorage.setItem('token',JSON.stringify(email));
     }).catch((error) => {

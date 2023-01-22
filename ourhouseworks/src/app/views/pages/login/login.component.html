@@ -3,13 +3,16 @@
         <h1>Sign up</h1>
         <mat-card-content>
             <mat-form-field appearance="fill">
-                <input matInput type="text" placeholder="Username" name="uname" required #emailSignup>
+                <input matInput type="email" placeholder="E-mail" name="email" required #emailSignup>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <input matInput type="number" placeholder="Persons" name="prs" required #person>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <input matInput type="password" placeholder="Password" name="psw" required #passwordSignup>
             </mat-form-field>
             <button mat-raised-button color="primary" type="button" class="registerbtn"
-                (click)="onSignup(emailSignup.value, passwordSignup.value)">Register</button>
+                (click)="onSignup(emailSignup.value, passwordSignup.value, person.value)">Register</button>
         </mat-card-content>
     </mat-card>
 </div>
@@ -18,7 +21,7 @@
         <h1>Sign in</h1>
         <mat-card-content>
             <mat-form-field appearance="fill">
-                <input matInput type="text" placeholder="Username" name="uname" required #emailSignup>
+                <input matInput type="email" placeholder="E-mail" name="email" required #emailSignup>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <input matInput type="password" placeholder="Password" name="psw" required #passwordSignup>
