@@ -38,30 +38,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  async onSignup(email:string,password:string, person:any){
-    await this.firebaseService.signup(email,password, person)
-    .then(() => {
-      sessionStorage.setItem('token',JSON.stringify(email));
-    }).catch((error) => {
-      switch (error.code) {
-        case "auth/email-already-exists":
-        {
-            alert("E-mail cím már foglalt!");
-            break;
-        }
-        case "auth/invalid-password":
-        {
-           alert("Nem megfelelő jelszó: legalább 6 karakter.");
-           break;
-        }
-           default:
-        {
-            alert("Email cím már foglalt, vagy nem megfelelő jelszó!");
-            break;
-        }
-      }
-    });
-  }
+  
   ngOnInit(): void {
   }
 
