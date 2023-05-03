@@ -20,12 +20,14 @@ import { LoginComponent } from './views/pages/login/login.component';
 import { FirebaseService } from './shared/services/firebase.service';
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { MainComponent } from './views/pages/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
