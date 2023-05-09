@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatCardModule} from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
@@ -21,13 +23,17 @@ import { FirebaseService } from './shared/services/firebase.service';
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { MainComponent } from './views/pages/main/main.component';
+import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
+import { ToolbarComponent } from './shared/component/toolbar/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    MainComponent
+    MainComponent,
+    SidenavComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,9 @@ import { MainComponent } from './views/pages/main/main.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-
+    MatSidenavModule,
+    MatToolbarModule,
+    
     AppRoutingModule,
     AngularFireModule,
     AngularFireAuthModule,

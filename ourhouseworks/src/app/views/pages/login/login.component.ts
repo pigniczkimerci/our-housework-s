@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   })
   constructor(private asf: AngularFirestore, public firebaseService : FirebaseService) {  }
-  
+
   async onSignin(email:string,password:string){
     await this.firebaseService.signin(email, password)
     .then(() => {
