@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
@@ -9,11 +10,12 @@ import { FirebaseService } from 'src/app/shared/services/firebase.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private asf: AngularFirestore, public firebaseService : FirebaseService) { }
+  constructor(private asf: AngularFirestore, public firebaseService : FirebaseService, private router: Router) { }
   async onSignup(email:string,password:string, person:any){
     await this.firebaseService.signup(email,password, person)
     .then(() => {
       sessionStorage.setItem('token',JSON.stringify(email));
+      this.router.navigate(["/main"]);
     }).catch((error) => {
       switch (error.code) {
         case "auth/email-already-exists":

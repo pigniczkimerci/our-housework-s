@@ -14,15 +14,15 @@ export class FirebaseService {
   async signin(email: string, password: string) {
     await this.firebaseAuth.signInWithEmailAndPassword(email, password)
       .then(res => {
-       // sessionStorage.setItem("user", JSON.stringify(res.user));
-        this.router.navigate(["/main"]);
+        sessionStorage.setItem("user", JSON.stringify(res.user));
+        //this.router.navigate(["/main"]);
       })
   }
   async signup(email: string, password: string, person: any) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
         //sessionStorage.setItem("user", JSON.stringify(res.user));
-        this.router.navigate(["/main"]);
+       // this.router.navigate(["/main"]);
         this.afs.collection('house').add({
           email: email,
           person: person
