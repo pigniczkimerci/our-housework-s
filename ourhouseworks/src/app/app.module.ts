@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
@@ -45,6 +46,7 @@ import { ToolbarComponent } from './shared/component/toolbar/toolbar/toolbar.com
     MatButtonModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatIconModule,
     
     AppRoutingModule,
     AngularFireModule,

@@ -21,8 +21,7 @@ export class FirebaseService {
   async signup(email: string, password: string, person: any) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
-        //sessionStorage.setItem("user", JSON.stringify(res.user));
-       // this.router.navigate(["/main"]);
+        sessionStorage.setItem("user", JSON.stringify(res.user));
         this.afs.collection('house').add({
           email: email,
           person: person

@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/shared/auth/auth.service';
+import { SidenavComponent } from '../../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,17 +8,17 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  @Input() isLoggedIn!: boolean;
-  private session = sessionStorage.getItem('token');
-
-  constructor() {
-    console.log(this.session);
-    if (!this.session) {
-      console.log("false");
-      this.isLoggedIn = false;
-    } else {
-      console.log("true");
-      this.isLoggedIn = true;
-    }
+  isLoggedIn: boolean = false;
+  @ViewChild(SidenavComponent) sidenav!: SidenavComponent;
+  constructor(private authService: AuthService) {
+    console.log(this.sidenav);
+  }
+  toggleSidenav(): void {
+    this.sidenav.toggleSidenav();
+  }
+  ngOnInit() {
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+    });
   }
 }

@@ -3,36 +3,27 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { } 
 
-  /*canActivate() {
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-    if(isLoggedIn === 'true'){
-      return true;
-    }else{
-      alert("Please sign in!")
-      return false;
-    }
-  }*/
   canActivate( next: ActivatedRouteSnapshot,state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const auth = getAuth();
+      const app = initializeApp(environment.firebase);
+      const auth = getAuth(app);
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log(user);
           resolve(true);
         } else {
           window.alert("Please sign in")
-          console.log('User is not logged in');
           this.router.navigate(['/login']);
           resolve(false);
         }
       });
     });
   }
-  
 }
