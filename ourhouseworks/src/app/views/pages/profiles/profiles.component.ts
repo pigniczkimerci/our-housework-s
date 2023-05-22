@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { first } from 'rxjs';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-profiles',
+  templateUrl: './profiles.component.html',
+  styleUrls: ['./profiles.component.scss']
 })
-export class MainComponent implements OnInit {
-  taskName!: string;
+export class ProfilesComponent {
+  personName!: string;
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
   
   ngOnInit(): void {
   }
 
-  createTask() {
+  createPerson() {
     this.auth.currentUser.then((user) => {
-      if (user && this.taskName) {
-        const task = {name: this.taskName};
+      if (user && this.personName) {
+        const task = {name: this.personName};
         this.firestore
           .collection('house', (ref) => ref.where('email', '==', user.email))
           .get()
@@ -29,20 +28,20 @@ export class MainComponent implements OnInit {
               this.firestore
                 .collection('house')
                 .doc(houseId)
-                .collection('task')
+                .collection('people')
                 .add(task)
                 .then(() => {
-                  console.log('Task added successfully to Firestore.');
+                  console.log('Person added successfully to Firestore.');
                 })
                 .catch((error) => {
-                  console.error('Error adding task to Firestore: ', error);
+                  console.error('Error adding person to Firestore: ', error);
                 });
             } else {
               console.log('House not found for the user.');
             }
           })
           .catch((error) => {
-            console.error('Error retrieving house from Firestore: ', error);
+            console.error('Error retrieving person from Firestore: ', error);
           });
       }
     });

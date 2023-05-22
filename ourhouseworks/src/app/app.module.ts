@@ -16,6 +16,8 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
+import { FormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/pages/login/login.component';
@@ -25,7 +27,8 @@ import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { MainComponent } from './views/pages/main/main.component';
 import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
-import { ToolbarComponent } from './shared/component/toolbar/toolbar/toolbar.component';
+import { ToolbarComponent } from './shared/component/toolbar/toolbar.component';
+import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { ToolbarComponent } from './shared/component/toolbar/toolbar/toolbar.com
     RegisterComponent,
     MainComponent,
     SidenavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ProfilesComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import { ToolbarComponent } from './shared/component/toolbar/toolbar/toolbar.com
     MatToolbarModule,
     MatIconModule,
     
+    FormsModule,
+
     AppRoutingModule,
     AngularFireModule,
     AngularFireAuthModule,

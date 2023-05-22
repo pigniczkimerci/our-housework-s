@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { SidenavComponent } from '../../sidenav/sidenav.component';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,9 +10,7 @@ import { SidenavComponent } from '../../sidenav/sidenav.component';
 export class ToolbarComponent {
   isLoggedIn: boolean = false;
   @ViewChild(SidenavComponent) sidenav!: SidenavComponent;
-  constructor(private authService: AuthService) {
-    console.log(this.sidenav);
-  }
+  constructor(private authService: AuthService) { }
   toggleSidenav(): void {
     this.sidenav.toggleSidenav();
   }

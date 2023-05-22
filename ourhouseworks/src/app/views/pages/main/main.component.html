@@ -1,1 +1,9 @@
-<p>main works!</p>
+<div>
+    <h1>New task</h1>
+    <mat-form-field>
+        <input matInput placeholder="Task Name" [(ngModel)]="taskName">
+      </mat-form-field>
+    <button mat-icon-button color="primary" (click)="createTask()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

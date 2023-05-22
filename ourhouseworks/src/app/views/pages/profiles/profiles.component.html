@@ -1,0 +1,14 @@
+<div>
+    <div>
+        <h1>New person</h1>
+        <mat-form-field>
+            <input matInput placeholder="Person Name" [(ngModel)]="personName">
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="createPerson()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div>
+        <h1>Current people</h1>
+    </div>
+</div>
