@@ -1,3 +1,21 @@
 .container {
     height: 100vh;
+    mat-sidenav{
+        width: 150px;
+        padding: 20px 0px 0px 30px;
+        a {
+            display: flex;
+            text-decoration: none;
+            color: #000;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .active-link {
+            color: #3F51B5;
+            text-decoration: underline;
+          }
+    }
+    mat-sidenav-content{
+        padding: 20px;
+    }
 }
