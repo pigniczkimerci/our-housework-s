@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profiles',
@@ -9,9 +10,12 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class ProfilesComponent {
   personName!: string;
+  //TODO any
+  people: Observable<any[]> | undefined;
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
   
   ngOnInit(): void {
+    this.people = this.firestore.collectionGroup('people').valueChanges();
   }
 
   createPerson() {

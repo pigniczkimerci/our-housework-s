@@ -6,4 +6,10 @@
     <button mat-icon-button color="primary" (click)="createTask()">
         <mat-icon>add</mat-icon>
     </button>
+    <h1>Current tasks</h1>
+    <ul>
+      <li *ngFor="let task of tasks | async">
+        {{ task.name }}
+      </li>
+    </ul>
 </div>

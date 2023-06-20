@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { first } from 'rxjs';
+import { Observable, first } from 'rxjs';
+
 
 @Component({
   selector: 'app-main',
@@ -10,9 +11,12 @@ import { first } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   taskName!: string;
+  //TODO any
+  tasks: Observable<any[]> | undefined;
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
   
   ngOnInit(): void {
+    this.tasks = this.firestore.collectionGroup('task').valueChanges();
   }
 
   createTask() {
