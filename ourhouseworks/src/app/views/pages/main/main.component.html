@@ -34,7 +34,15 @@
         <mat-header-cell *matHeaderCellDef>Responsible Person</mat-header-cell>
         <mat-cell *matCellDef="let task">{{ task.resperson }}</mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="['name', 'date', 'resperson']"></mat-header-row>
-      <mat-row *matRowDef="let task; columns: ['name', 'date', 'resperson']"></mat-row>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <button mat-icon-button (click)="deleteTask(task)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="['name', 'date', 'resperson', 'actions']"></mat-header-row>
+  <mat-row *matRowDef="let task; columns: ['name', 'date', 'resperson', 'actions']"></mat-row>
     </mat-table>
 </div>

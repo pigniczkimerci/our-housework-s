@@ -11,13 +11,11 @@
     <div>
         <h1>Current people</h1>
         <mat-table [dataSource]="peopleSource">
-            <!-- Column for name -->
             <ng-container matColumnDef="name">
               <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
               <mat-cell *matCellDef="let person">{{ person.name }}</mat-cell>
             </ng-container>
           
-            <!-- Column for delete button -->
             <ng-container matColumnDef="delete">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let person">
@@ -27,9 +25,7 @@
               </mat-cell>
             </ng-container>
           
-            <!-- Define the header row -->
             <mat-header-row *matHeaderRowDef="['name', 'delete']"></mat-header-row>
-            <!-- Define the data rows -->
             <mat-row *matRowDef="let row; columns: ['name', 'delete']"></mat-row>
           </mat-table>
     </div>
