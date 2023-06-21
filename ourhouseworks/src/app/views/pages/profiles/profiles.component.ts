@@ -12,10 +12,14 @@ export class ProfilesComponent {
   personName!: string;
   //TODO any
   people: Observable<any[]> | undefined;
+  peopleSource: any;
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
   
   ngOnInit(): void {
     this.people = this.firestore.collectionGroup('people').valueChanges();
+    this.people.subscribe((data) => {
+      this.peopleSource = data;
+    });
   }
 
   createPerson() {

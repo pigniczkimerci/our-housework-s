@@ -20,10 +20,14 @@ export class MainComponent implements OnInit {
   selectedMember!: any;
   allFieldsFilled: boolean = false;
 
+  tableDataSource!: any[];
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
   ngOnInit(): void {
     this.tasks = this.firestore.collectionGroup('task').valueChanges();
+    this.tasks.subscribe((data) => {
+      this.tableDataSource = data;
+    });
     this.responsibleMembers = this.firestore.collectionGroup('people').valueChanges();
     this.nav.show();
   }

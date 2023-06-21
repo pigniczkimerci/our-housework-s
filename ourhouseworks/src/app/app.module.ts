@@ -12,6 +12,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
@@ -57,6 +58,7 @@ import { ProfilesComponent } from './views/pages/profiles/profiles.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatTableModule,
     
     FormsModule,
 

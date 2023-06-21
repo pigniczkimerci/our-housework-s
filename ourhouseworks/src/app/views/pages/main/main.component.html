@@ -21,11 +21,20 @@
       <mat-icon>add</mat-icon>
     </button>
     <h1>Current tasks</h1>
-    <ul>
-      <li *ngFor="let task of tasks | async">
-        {{ task.name }}
-        {{ task.date.toDate() | date:'yyyy/MM/dd'}}
-        {{ task.resperson }}
-      </li>
-    </ul>
+    <mat-table   [dataSource]="tableDataSource">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{ task.date.toDate() | date:'yyyy/MM/dd' }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="resperson">
+        <mat-header-cell *matHeaderCellDef>Responsible Person</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{ task.resperson }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="['name', 'date', 'resperson']"></mat-header-row>
+      <mat-row *matRowDef="let task; columns: ['name', 'date', 'resperson']"></mat-row>
+    </mat-table>
 </div>
