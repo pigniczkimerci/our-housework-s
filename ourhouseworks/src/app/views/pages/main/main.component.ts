@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, first } from 'rxjs';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 
 @Component({
@@ -13,10 +14,14 @@ export class MainComponent implements OnInit {
   taskName!: string;
   //TODO any
   tasks: Observable<any[]> | undefined;
-  constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
+  date: any;
+  responsibleMembers!: Observable<any[]>;
+  constructor( private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService) {  }
   
   ngOnInit(): void {
     this.tasks = this.firestore.collectionGroup('task').valueChanges();
+    this.responsibleMembers = this.firestore.collection('people').valueChanges();
+    this.nav.show();
   }
 
   createTask() {

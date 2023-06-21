@@ -5,6 +5,7 @@ import { RegisterComponent } from './views/pages/register/register.component';
 import { MainComponent } from './views/pages/main/main.component';
 import { AuthGuard } from './shared/auth/auth.guard';
 import { ProfilesComponent } from './views/pages/profiles/profiles.component';
+import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
 
 const routes: Routes = [
   {path:"", component: LoginComponent},

@@ -1,11 +1,13 @@
 <div>
     <h1>New task</h1>
     <mat-form-field>
-        <input matInput placeholder="Task Name" [(ngModel)]="taskName">
-      </mat-form-field>
+      <input matInput placeholder="Task Name" [(ngModel)]="taskName" name="taskName">
+    </mat-form-field>
     <button mat-icon-button color="primary" (click)="createTask()">
         <mat-icon>add</mat-icon>
     </button>
+        
+
     <h1>Current tasks</h1>
     <ul>
       <li *ngFor="let task of tasks | async">

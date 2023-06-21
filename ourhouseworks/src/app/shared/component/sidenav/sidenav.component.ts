@@ -4,6 +4,7 @@ import { AuthGuard } from '../../auth/auth.guard';
 import { AuthService } from '../../auth/auth.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,17 +14,19 @@ import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 export class SidenavComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isLoggedIn: boolean = false;
-  isSidenavOpen = true;
+  isSidenavOpen: boolean= true;
   sidenavMode: MatDrawerMode = 'side';
 
   toggleSidenav(): void {
     this.sidenav.toggle();
   }
-  constructor(private authService: AuthService, private breakpointObserver: BreakpointObserver) {
+  constructor(public nav: NavbarService, private authService: AuthService, private breakpointObserver: BreakpointObserver) {
     this.observeScreenSizeChanges();
+
   }
 
   ngOnInit() {
+    console.log(this.isLoggedIn);
     this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
