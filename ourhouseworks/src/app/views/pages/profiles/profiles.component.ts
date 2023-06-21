@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { Person } from 'src/app/shared/models/person';
 
 @Component({
   selector: 'app-profiles',
@@ -11,12 +12,12 @@ import { Observable } from 'rxjs';
 export class ProfilesComponent {
   personName!: string;
   //TODO any
-  people: Observable<any[]> | undefined;
-  peopleSource: any;
+  people: Observable<Person[]> | undefined;
+  peopleSource!: Person[];
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
   
   ngOnInit(): void {
-    this.people = this.firestore.collectionGroup('people').valueChanges();
+    this.people = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
     this.people.subscribe((data) => {
       this.peopleSource = data;
     });
@@ -26,6 +27,7 @@ export class ProfilesComponent {
     this.auth.currentUser.then((user) => {
       if (user && this.personName) {
         const task = {name: this.personName};
+        console.log(this.peopleSource);
         this.firestore
           .collection('house', (ref) => ref.where('email', '==', user.email))
           .get()

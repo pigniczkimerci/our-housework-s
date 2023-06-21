@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, first } from 'rxjs';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
 import { DatePipe } from '@angular/common';
+import { Person } from 'src/app/shared/models/person';
 
 @Component({
   selector: 'app-main',
@@ -14,21 +15,22 @@ import { DatePipe } from '@angular/common';
 export class MainComponent implements OnInit {
   taskName!: string;
   //TODO any
-  tasks: Observable<any[]> | undefined;
-  date: any;
-  responsibleMembers!: Observable<any[]>;
-  selectedMember!: any;
+  tasks: Observable<Task[]> | undefined;
+  date: Date | undefined;
+  responsibleMembers!: Observable<Person[]>;
+  selectedMember!: Person;
+  
   allFieldsFilled: boolean = false;
 
-  tableDataSource!: any[];
+  tableDataSource!: Task[];
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
   ngOnInit(): void {
-    this.tasks = this.firestore.collectionGroup('task').valueChanges();
+    this.tasks = this.firestore.collectionGroup('task').valueChanges() as Observable<Task[]>;
     this.tasks.subscribe((data) => {
       this.tableDataSource = data;
     });
-    this.responsibleMembers = this.firestore.collectionGroup('people').valueChanges();
+    this.responsibleMembers = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
     this.nav.show();
   }
 
