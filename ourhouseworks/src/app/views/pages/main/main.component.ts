@@ -14,7 +14,6 @@ import { Person } from 'src/app/shared/models/person';
 })
 export class MainComponent implements OnInit {
   taskName!: string;
-  //TODO any
   tasks: Observable<Task[]> | undefined;
   date: Date | undefined;
   responsibleMembers!: Observable<Person[]>;
