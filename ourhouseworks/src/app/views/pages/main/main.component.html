@@ -1,25 +1,25 @@
 <div>
     <h1>New task</h1>
     <mat-form-field>
-      <input matInput placeholder="Task Name" [(ngModel)]="taskName" name="taskName">
+      <input matInput placeholder="Task Name" [(ngModel)]="taskName" name="taskName" (input)="checkFieldsFilled()">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Date" [(ngModel)]="date" name="date">
+      <input matInput [matDatepicker]="picker" placeholder="Date" [(ngModel)]="date" name="date"  (input)="checkFieldsFilled()">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    
-   <mat-form-field>
+    <mat-form-field>
       <mat-label>Responsible Member</mat-label>
-      <mat-select [(ngModel)]="selectedMember" name="responsibleMember">
+      <mat-select [(ngModel)]="selectedMember" name="responsibleMember" (selectionChange)="checkFieldsFilled()">
         <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.name">
           {{ member.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-icon-button color="primary" (click)="createTask()">
+    
+    <button mat-icon-button color="primary" (click)="createTask()" [disabled]="!(taskName && date && selectedMember)">
       <mat-icon>add</mat-icon>
-  </button>
+    </button>
     <h1>Current tasks</h1>
     <ul>
       <li *ngFor="let task of tasks | async">

@@ -18,6 +18,8 @@ export class MainComponent implements OnInit {
   date: any;
   responsibleMembers!: Observable<any[]>;
   selectedMember!: any;
+  allFieldsFilled: boolean = false;
+
   constructor( private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
   ngOnInit(): void {
@@ -57,5 +59,8 @@ export class MainComponent implements OnInit {
           });
       }
     });
+  }
+  checkFieldsFilled() {
+    this.allFieldsFilled = !!this.taskName && !!this.date && !!this.selectedMember;
   }
 }
