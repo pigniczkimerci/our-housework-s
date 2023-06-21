@@ -3,15 +3,29 @@
     <mat-form-field>
       <input matInput placeholder="Task Name" [(ngModel)]="taskName" name="taskName">
     </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Date" [(ngModel)]="date" name="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    
+   <mat-form-field>
+      <mat-label>Responsible Member</mat-label>
+      <mat-select [(ngModel)]="selectedMember" name="responsibleMember">
+        <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.name">
+          {{ member.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <button mat-icon-button color="primary" (click)="createTask()">
-        <mat-icon>add</mat-icon>
-    </button>
-        
-
+      <mat-icon>add</mat-icon>
+  </button>
     <h1>Current tasks</h1>
     <ul>
       <li *ngFor="let task of tasks | async">
         {{ task.name }}
+        {{ task.date.toDate() | date:'yyyy/MM/dd'}}
+        {{ task.resperson }}
       </li>
     </ul>
 </div>
