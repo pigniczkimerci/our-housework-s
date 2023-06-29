@@ -21,18 +21,41 @@
       <mat-icon>add</mat-icon>
     </button>
     <h1>Current tasks</h1>
-    <mat-table   [dataSource]="tableDataSource">
+    <mat-table [dataSource]="tableDataSource">
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
+        <mat-cell *matCellDef="let task">
+          <ng-container *ngIf="task.isEditing; else displayMode">
+            <input [(ngModel)]="task.name" />
+          </ng-container>
+          <ng-template #displayMode>{{ task.name }}</ng-template>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-        <mat-cell *matCellDef="let task">{{ task.date.toDate() | date:'yyyy/MM/dd' }}</mat-cell>
+        <mat-cell *matCellDef="let task">
+          <ng-container *ngIf="task.isEditing; else displayMode">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Date" [(ngModel)]="task.date" name="date"  (input)="checkFieldsFilled()">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </ng-container>
+          <ng-template #displayMode>{{ task.date.toDate() | date:'yyyy/MM/dd' }}</ng-template>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="resperson">
         <mat-header-cell *matHeaderCellDef>Responsible Person</mat-header-cell>
-        <mat-cell *matCellDef="let task">{{ task.resperson }}</mat-cell>
+        <mat-cell *matCellDef="let task">
+          <ng-container *ngIf="task.isEditing; else displayMode">
+            <mat-select [(ngModel)]="task.resperson" name="responsibleMember">
+              <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.name">
+                {{ member.name }}
+              </mat-option>
+            </mat-select>
+          </ng-container>
+          <ng-template #displayMode>{{ task.resperson }}</ng-template>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -40,9 +63,20 @@
           <button mat-icon-button (click)="deleteTask(task)">
             <mat-icon>delete</mat-icon>
           </button>
+          <button mat-icon-button (click)="editTask(task)" *ngIf="!task.isEditing">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="updateTask(task)" *ngIf="task.isEditing">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button mat-icon-button (click)="cancelEditTask(task)" *ngIf="task.isEditing">
+            <mat-icon>cancel</mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
+      
       <mat-header-row *matHeaderRowDef="['name', 'date', 'resperson', 'actions']"></mat-header-row>
-  <mat-row *matRowDef="let task; columns: ['name', 'date', 'resperson', 'actions']"></mat-row>
+      <mat-row *matRowDef="let task; columns: ['name', 'date', 'resperson', 'actions']"></mat-row>
     </mat-table>
+    
 </div>
