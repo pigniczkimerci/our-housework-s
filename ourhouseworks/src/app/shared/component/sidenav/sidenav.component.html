@@ -1,5 +1,5 @@
-<mat-sidenav-container class="container" *ngIf="nav.isVisible">
-    <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode">
+<mat-sidenav-container class="container" >
+    <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode" *ngIf="nav.isVisible">
       <a routerLink="main" routerLinkActive="active-link">Tasks</a>
       <a routerLink="profile" routerLinkActive="active-link">Profile</a>
     </mat-sidenav>
