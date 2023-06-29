@@ -26,7 +26,8 @@ export class MainComponent implements OnInit {
 
   updatedTask!: Tasks;
   taskID!: any;
-  constructor(private cdRef: ChangeDetectorRef, private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
+
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
   ngOnInit(): void {
     this.tasks = this.firestore.collectionGroup('task').valueChanges() as Observable<Tasks[]>;
@@ -35,14 +36,12 @@ export class MainComponent implements OnInit {
       this.tableDataSource.forEach((element) => {
         element.isEditing = false;
       });
-    })
+    });
     this.responsibleMembers = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
-    this.nav.show();
-   
-    
-    this.cdRef.detectChanges();
+    setTimeout(() => {
+      this.nav.show();
+    });
   }
-
   createTask() {
     this.auth.currentUser.then((user) => {
       if (user && this.taskName) {
@@ -155,11 +154,10 @@ export class MainComponent implements OnInit {
   }
   
   updateTask(task: Tasks) {
-    console.log(this.taskID);
     this.taskID.update({  name: task.name, resperson: task.resperson, date: task.date }).then(() => {
         task.isEditing = false; // Exit edit mode
       }).catch((error:any) => {
       console.error('Error updating task name in Firestore: ', error);
-    });        
+    });      
   }
 }
