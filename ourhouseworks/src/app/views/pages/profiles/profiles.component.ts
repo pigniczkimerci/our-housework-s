@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, combineLatest, concat, map, merge, take } from 'rxjs';
 import { Person } from 'src/app/shared/models/person';
 import { Tasks } from 'src/app/shared/models/task';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 
 @Component({
   selector: 'app-profiles',
@@ -14,7 +15,7 @@ export class ProfilesComponent {
   personName!: string;
   people!: Observable<(Person)[]>;
   peopleSource!: (Person)[];
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) { }
+  constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, private auth: AngularFireAuth) { }
 
   ngOnInit(): void {
     const peopleObservable = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
@@ -35,36 +36,13 @@ export class ProfilesComponent {
     combinedObservable.subscribe();
   }
   createPerson() {
-    this.auth.currentUser.then((user) => {
-      if (user && this.personName) {
-        const task = { personName: this.personName };
-        this.firestore
-          .collection('house', (ref) => ref.where('email', '==', user.email))
-          .get()
-          .toPromise()
-          .then((querySnapshot) => {
-            if (!querySnapshot!.empty) {
-              const houseId = querySnapshot!.docs[0].id;
-              this.firestore
-                .collection('house')
-                .doc(houseId)
-                .collection('people')
-                .add(task)
-                .then(() => {
-                  console.log('Person added successfully to Firestore.');
-                })
-                .catch((error) => {
-                  console.error('Error adding person to Firestore: ', error);
-                });
-            } else {
-              console.log('House not found for the user.');
-            }
-          })
-          .catch((error) => {
-            console.error('Error retrieving person from Firestore: ', error);
-          });
-      }
-    });
+    this.databaseService.addPersonToFirestore(this.personName)
+      .then(() => {
+        console.log("Person added successfully");
+      })
+      .catch((error) => {
+        console.log("Error adding person");
+      });
   }
   deletePerson(person: Person) {
     this.auth.currentUser.then((user) => {

@@ -6,6 +6,7 @@ import { NavbarService } from 'src/app/shared/services/navbar.service';
 import { DatePipe } from '@angular/common';
 import { Person } from 'src/app/shared/models/person';
 import { Tasks } from 'src/app/shared/models/task';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 
 @Component({
   selector: 'app-main',
@@ -27,7 +28,7 @@ export class MainComponent implements OnInit {
   updatedTask!: Tasks;
   taskID!: any;
 
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
+  constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
   ngOnInit(): void {
     this.tasks = this.firestore.collectionGroup('task').valueChanges() as Observable<Tasks[]>;
@@ -43,37 +44,19 @@ export class MainComponent implements OnInit {
     });
   }
   createTask() {
-    this.auth.currentUser.then((user) => {
-      if (user && this.taskName) {
-        const task = {taskName: this.taskName, date: this.date, resperson: this.selectedMember };
-        this.firestore
-          .collection('house', (ref) => ref.where('email', '==', user.email))
-          .get()
-          .toPromise()
-          .then((querySnapshot) => {
-            if (!querySnapshot!.empty) {
-              const houseId = querySnapshot!.docs[0].id;
-              this.firestore
-                .collection('house')
-                .doc(houseId)
-                .collection('task')
-                .add(task)
-                .then(() => {
-                  console.log('Task added successfully to Firestore.');
-                })
-                .catch((error) => {
-                  console.error('Error adding task to Firestore: ', error);
-                });
-            } else {
-              console.log('House not found for the user.');
-            }
-          })
-          .catch((error) => {
-            console.error('Error retrieving house from Firestore: ', error);
-          });
-      }
-    });
+    if (this.taskName && this.date && this.selectedMember && this.selectedMember) {
+      this.databaseService.addTaskToFirestore(this.taskName, this.date, this.selectedMember)
+        .then(() => {
+          console.log('Task added successfully to Firestore.');
+        })
+        .catch((error) => {
+          console.error('Error adding task to Firestore: ', error);
+        });
+    } else {
+      console.error('Invalid task details.');
+    }
   }
+  
   checkFieldsFilled() {
     this.allFieldsFilled = !!this.taskName && !!this.date && !!this.selectedMember;
   }
