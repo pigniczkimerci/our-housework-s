@@ -10,7 +10,7 @@
     </div>
     <div>
         <h1>Current people</h1>
-        <mat-table [dataSource]="peopleSource">
+        <!--<mat-table [dataSource]="peopleSource">
             <ng-container matColumnDef="name">
               <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
               <mat-cell *matCellDef="let person">{{ person.name }}</mat-cell>
@@ -28,5 +28,14 @@
             <mat-header-row *matHeaderRowDef="['name', 'delete']"></mat-header-row>
             <mat-row *matRowDef="let row; columns: ['name', 'delete']"></mat-row>
           </mat-table>
+          <div class="person-container">
+              <div *ngFor="let person of peopleSource" class="person-card">
+                <div class="person-name">{{ person.person }}</div>
+                <div class="person-tasks">{{ person.task }}</div>
+                <button mat-icon-button class="delete-button" (click)="deletePerson(person)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>-->
     </div>
 </div>
