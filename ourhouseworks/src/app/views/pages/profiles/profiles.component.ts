@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, combineLatest, concat, map, merge, take } from 'rxjs';
 import { Person } from 'src/app/shared/models/person';
+import { Tasks } from 'src/app/shared/models/task';
 
 @Component({
   selector: 'app-profiles',
@@ -12,9 +13,9 @@ import { Person } from 'src/app/shared/models/person';
 export class ProfilesComponent {
   personName!: string;
   people!: Observable<(Person)[]>;
-  peopleSource!: (Person )[];
-  constructor( private firestore: AngularFirestore, private auth: AngularFireAuth) {  }
-  
+  peopleSource!: (Person)[];
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) { }
+
   ngOnInit(): void {
     const peopleObservable = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
     const tasksObservable = this.firestore.collectionGroup('task').valueChanges() as Observable<Task[]>;
@@ -29,15 +30,14 @@ export class ProfilesComponent {
           person.tasks = matchingTasks;
         });
         this.peopleSource = people;
-        console.log(this.peopleSource);
       })
     );
-    combinedObservable.subscribe(); 
+    combinedObservable.subscribe();
   }
   createPerson() {
     this.auth.currentUser.then((user) => {
       if (user && this.personName) {
-        const task = {personName: this.personName};
+        const task = { personName: this.personName };
         this.firestore
           .collection('house', (ref) => ref.where('email', '==', user.email))
           .get()
@@ -71,18 +71,18 @@ export class ProfilesComponent {
       if (user && person.personName) {
         const houseCollectionRef = this.firestore.collection('house');
         const query = houseCollectionRef.ref.where('email', '==', user.email);
-        
+
         query.get().then((querySnapshot) => {
           if (!querySnapshot.empty) {
             const houseId = querySnapshot.docs[0].id;
             const peopleCollectionRef = houseCollectionRef.doc(houseId).collection('people');
             const personQuery = peopleCollectionRef.ref.where('personName', '==', person.personName);
-            
+
             personQuery.get().then((personQuerySnapshot) => {
               if (!personQuerySnapshot.empty) {
                 const personDocId = personQuerySnapshot.docs[0].id;
                 const personDocRef = peopleCollectionRef.doc(personDocId);
-                
+
                 personDocRef.delete().then(() => {
                   console.log('Person deleted successfully from Firestore.');
                 }).catch((error) => {
@@ -103,10 +103,13 @@ export class ProfilesComponent {
       }
     });
   }
-convertTimestampToDate(timestamp: any): Date | null {
-  if (timestamp && timestamp.toDate) {
-    return timestamp.toDate();
+  convertTimestampToDate(timestamp: any): Date | null {
+    if (timestamp && timestamp.toDate) {
+      return timestamp.toDate();
+    }
+    return null;
   }
-  return null;
-}
+  doneTask(task:Tasks){
+    //TODO
+  }
 }

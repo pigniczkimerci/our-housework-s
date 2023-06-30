@@ -33,8 +33,11 @@
               <div class="person-name">{{ person.personName }}</div>
               <div class="person-tasks">
                 <ul>
-                  <li *ngFor="let task of person.tasks">{{ task.taskName }} - {{ convertTimestampToDate(task.date) | date:'yyyy/MM/dd'}}</li>
-
+                  <li *ngFor="let task of person.tasks">
+                    <span>{{ task.taskName }} - </span>
+                    <span>{{ convertTimestampToDate(task.date) | date:'yyyy/MM/dd'}}</span>
+                    <mat-icon class="done-icon" (click)="doneTask(task)">done</mat-icon>
+                  </li>
                 </ul>
               </div>
               <button mat-icon-button class="delete-button" (click)="deletePerson(person)">
