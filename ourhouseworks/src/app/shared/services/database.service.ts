@@ -8,6 +8,7 @@ import { Tasks } from '../models/task';
   providedIn: 'root'
 })
 export class DatabaseService {
+  taskID: string | undefined;
 
   constructor(private firestore: AngularFirestore,private auth: AngularFireAuth) { }
   
@@ -111,5 +112,55 @@ export class DatabaseService {
       console.error('Error deleting task from Firestore: ', error);
       throw error;
     });
+  }
+  editTask(task: Tasks): Promise<void> {
+    return this.getTaskCollectionRef().then((taskCollectionRef) => {
+      const taskQuery = taskCollectionRef.where('taskName', '==', task.taskName)
+        .where('resperson', '==', task.resperson)
+        .where('date', '==', task.date);
+
+      return taskQuery.get().then((taskQuerySnapshot: { empty: any; docs: { id: string | undefined; }[]; }) => {
+        if (!taskQuerySnapshot.empty) {
+          this.taskID = taskQuerySnapshot.docs[0].id;
+          task.isEditing = true;
+        } else {
+          console.log('Task not found in Firestore.');
+        }
+      }).catch((error: any) => {
+        console.error('Error retrieving task from Firestore: ', error);
+        throw error;
+      });
+    }).catch((error) => {
+      console.error('Error retrieving house from Firestore: ', error);
+      throw error;
+    });
+  }
+
+  cancelEditTask(task: Tasks) {
+    task.isEditing = false;
+  }
+
+  updateTask(task: Tasks): Promise<void> {
+    if (this.taskID) {
+      return this.getTaskCollectionRef().then((taskCollectionRef) => {
+        const taskDocRef = taskCollectionRef.doc(this.taskID);
+        return taskDocRef.update({
+          taskName: task.taskName,
+          resperson: task.resperson,
+          date: task.date
+        }).then(() => {
+          console.log('Task updated successfully in Firestore.');
+          task.isEditing = false; // Exit edit mode
+        }).catch((error: any) => {
+          console.error('Error updating task in Firestore: ', error);
+          throw error;
+        });
+      }).catch((error) => {
+        console.error('Error retrieving task collection from Firestore: ', error);
+        throw error;
+      });
+    } else {
+      throw new Error('Task ID not set.');
+    }
   }
 }
