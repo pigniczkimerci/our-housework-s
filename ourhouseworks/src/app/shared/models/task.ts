@@ -4,6 +4,6 @@ export interface Tasks {
     id: string;
     isEditing: boolean;
     date: Date;
-    name: string;
+    taskName: string;
     resperson: Person;
 }

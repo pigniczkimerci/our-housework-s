@@ -1,4 +1,7 @@
+import { Tasks } from "./task";
+
 export interface Person {
-    name: string;
-    task: Task;
+    matchingPerson: never[];
+    personName: string;
+    tasks: Tasks[];
 }

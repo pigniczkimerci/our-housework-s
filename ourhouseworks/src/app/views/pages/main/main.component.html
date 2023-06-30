@@ -11,8 +11,8 @@
     <mat-form-field>
       <mat-label>Responsible Member</mat-label>
       <mat-select [(ngModel)]="selectedMember" name="responsibleMember" (selectionChange)="checkFieldsFilled()">
-        <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.name">
-          {{ member.name }}
+        <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.personName">
+          {{ member.personName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -26,9 +26,9 @@
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let task">
           <ng-container *ngIf="task.isEditing; else displayMode">
-            <input [(ngModel)]="task.name" />
+            <input [(ngModel)]="task.taskName" />
           </ng-container>
-          <ng-template #displayMode>{{ task.name }}</ng-template>
+          <ng-template #displayMode>{{ task.taskName }}</ng-template>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="date">
@@ -49,8 +49,8 @@
         <mat-cell *matCellDef="let task">
           <ng-container *ngIf="task.isEditing; else displayMode">
             <mat-select [(ngModel)]="task.resperson" name="responsibleMember">
-              <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.name">
-                {{ member.name }}
+              <mat-option *ngFor="let member of responsibleMembers | async" [value]="member.personName">
+                {{ member.personName }}
               </mat-option>
             </mat-select>
           </ng-container>

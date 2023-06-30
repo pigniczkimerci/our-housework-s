@@ -27,15 +27,20 @@
           
             <mat-header-row *matHeaderRowDef="['name', 'delete']"></mat-header-row>
             <mat-row *matRowDef="let row; columns: ['name', 'delete']"></mat-row>
-          </mat-table>
+          </mat-table>-->
           <div class="person-container">
-              <div *ngFor="let person of peopleSource" class="person-card">
-                <div class="person-name">{{ person.person }}</div>
-                <div class="person-tasks">{{ person.task }}</div>
-                <button mat-icon-button class="delete-button" (click)="deletePerson(person)">
-                  <mat-icon>delete</mat-icon>
-                </button>
+            <div *ngFor="let person of peopleSource" class="person-card">
+              <div class="person-name">{{ person.personName }}</div>
+              <div class="person-tasks">
+                <ul>
+                  <li *ngFor="let task of person.tasks">{{ task.taskName }} - {{ convertTimestampToDate(task.date) | date:'yyyy/MM/dd'}}</li>
+
+                </ul>
               </div>
-            </div>-->
+              <button mat-icon-button class="delete-button" (click)="deletePerson(person)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
     </div>
 </div>

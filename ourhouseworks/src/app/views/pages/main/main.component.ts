@@ -45,7 +45,7 @@ export class MainComponent implements OnInit {
   createTask() {
     this.auth.currentUser.then((user) => {
       if (user && this.taskName) {
-        const task = {name: this.taskName, date: this.date, resperson: this.selectedMember };
+        const task = {taskName: this.taskName, date: this.date, resperson: this.selectedMember };
         this.firestore
           .collection('house', (ref) => ref.where('email', '==', user.email))
           .get()
@@ -80,14 +80,14 @@ export class MainComponent implements OnInit {
   deleteTask(task: Tasks) {
     console.log(task);
     this.auth.currentUser.then((user) => {
-      if (user && task.name) {
+      if (user && task.taskName) {
         const houseCollectionRef = this.firestore.collection('house');
         const query = houseCollectionRef.ref.where('email', '==', user.email);
         query.get().then((querySnapshot) => {
           if (!querySnapshot.empty) {
             const houseId = querySnapshot.docs[0].id;
             const peopleCollectionRef = houseCollectionRef.doc(houseId).collection('task');
-            const personQuery = peopleCollectionRef.ref.where('name', '==', task.name);
+            const personQuery = peopleCollectionRef.ref.where('taskName', '==', task.taskName);
             
             personQuery.get().then((personQuerySnapshot) => {
               if (!personQuerySnapshot.empty) {
@@ -124,7 +124,7 @@ export class MainComponent implements OnInit {
           if (!querySnapshot.empty) {
             const houseId = querySnapshot.docs[0].id;
             const tasksCollectionRef = houseCollectionRef.doc(houseId).collection('task');
-            const taskQuery = tasksCollectionRef.ref.where('name', '==', task.name)
+            const taskQuery = tasksCollectionRef.ref.where('taskName', '==', task.taskName)
                                             .where('resperson', '==', task.resperson)
                                             .where('date', '==', task.date);
               taskQuery.get().then((taskQuerySnapshot) => {
@@ -154,7 +154,7 @@ export class MainComponent implements OnInit {
   }
   
   updateTask(task: Tasks) {
-    this.taskID.update({  name: task.name, resperson: task.resperson, date: task.date }).then(() => {
+    this.taskID.update({  name: task.taskName, resperson: task.resperson, date: task.date }).then(() => {
         task.isEditing = false; // Exit edit mode
       }).catch((error:any) => {
       console.error('Error updating task name in Firestore: ', error);
