@@ -45,41 +45,13 @@ export class ProfilesComponent {
       });
   }
   deletePerson(person: Person) {
-    this.auth.currentUser.then((user) => {
-      if (user && person.personName) {
-        const houseCollectionRef = this.firestore.collection('house');
-        const query = houseCollectionRef.ref.where('email', '==', user.email);
-
-        query.get().then((querySnapshot) => {
-          if (!querySnapshot.empty) {
-            const houseId = querySnapshot.docs[0].id;
-            const peopleCollectionRef = houseCollectionRef.doc(houseId).collection('people');
-            const personQuery = peopleCollectionRef.ref.where('personName', '==', person.personName);
-
-            personQuery.get().then((personQuerySnapshot) => {
-              if (!personQuerySnapshot.empty) {
-                const personDocId = personQuerySnapshot.docs[0].id;
-                const personDocRef = peopleCollectionRef.doc(personDocId);
-
-                personDocRef.delete().then(() => {
-                  console.log('Person deleted successfully from Firestore.');
-                }).catch((error) => {
-                  console.error('Error deleting person from Firestore: ', error);
-                });
-              } else {
-                console.log('Person not found in Firestore.');
-              }
-            }).catch((error) => {
-              console.error('Error retrieving person from Firestore: ', error);
-            });
-          } else {
-            console.log('House not found for the user.');
-          }
-        }).catch((error) => {
-          console.error('Error retrieving house from Firestore: ', error);
-        });
-      }
-    });
+    this.databaseService.deletePersonFromFirestore(person)
+      .then(() => {
+        console.log("Person deleted successfully");
+      })
+      .catch((error) => {
+        console.log("Error deleting person");
+      });
   }
   convertTimestampToDate(timestamp: any): Date | null {
     if (timestamp && timestamp.toDate) {

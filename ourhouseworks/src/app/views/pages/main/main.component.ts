@@ -61,41 +61,13 @@ export class MainComponent implements OnInit {
     this.allFieldsFilled = !!this.taskName && !!this.date && !!this.selectedMember;
   }
   deleteTask(task: Tasks) {
-    console.log(task);
-    this.auth.currentUser.then((user) => {
-      if (user && task.taskName) {
-        const houseCollectionRef = this.firestore.collection('house');
-        const query = houseCollectionRef.ref.where('email', '==', user.email);
-        query.get().then((querySnapshot) => {
-          if (!querySnapshot.empty) {
-            const houseId = querySnapshot.docs[0].id;
-            const peopleCollectionRef = houseCollectionRef.doc(houseId).collection('task');
-            const personQuery = peopleCollectionRef.ref.where('taskName', '==', task.taskName);
-            
-            personQuery.get().then((personQuerySnapshot) => {
-              if (!personQuerySnapshot.empty) {
-                const personDocId = personQuerySnapshot.docs[0].id;
-                const personDocRef = peopleCollectionRef.doc(personDocId);
-                
-                personDocRef.delete().then(() => {
-                  console.log('Task deleted successfully from Firestore.');
-                }).catch((error) => {
-                  console.error('Error deleting task from Firestore: ', error);
-                });
-              } else {
-                console.log('Task not found in Firestore.');
-              }
-            }).catch((error) => {
-              console.error('Error retrieving task from Firestore: ', error);
-            });
-          } else {
-            console.log('House not found for the user.');
-          }
-        }).catch((error) => {
-          console.error('Error retrieving house from Firestore: ', error);
-        });
-      }
-    });
+    this.databaseService.deleteTaskFromFirestore(task)
+      .then(() => {
+        console.log("Task deleted successfully");
+      })
+      .catch((error) => {
+        console.log("Error deleting task");
+      });
   }
 
   editTask(task: Tasks) {
