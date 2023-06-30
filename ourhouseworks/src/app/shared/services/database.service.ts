@@ -163,4 +163,60 @@ export class DatabaseService {
       throw new Error('Task ID not set.');
     }
   }
+
+  addTaskToPerson(personName: Person, doneTask: Tasks): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.auth.currentUser.then((user) => {
+        if (user && personName && doneTask) {
+          const task = { name: doneTask };
+          this.firestore
+            .collection('house', (ref) => ref.where('email', '==', user.email))
+            .get()
+            .toPromise()
+            .then((querySnapshot) => {
+              if (!querySnapshot!.empty) {
+                const houseId = querySnapshot!.docs[0].id;
+                const peopleCollectionRef = this.firestore
+                  .collection('house')
+                  .doc(houseId)
+                  .collection('people');
+                const personQuery = peopleCollectionRef.ref.where('personName', '==', personName);
+                  personQuery
+                  .get()
+                  .then((personQuerySnapshot) => {
+                    if (!personQuerySnapshot.empty) {
+                      const personDocId = personQuerySnapshot.docs[0].id;
+                      const personDocRef = peopleCollectionRef.doc(personDocId);
+                      personDocRef
+                        .update({ doneTask: doneTask })
+                        .then(() => {
+                          console.log('Task added to person successfully in Firestore.');
+                          resolve();
+                        })
+                        .catch((error) => {
+                          console.error('Error adding task to person in Firestore: ', error);
+                          reject(error);
+                        });
+                    } else {
+                      console.log('Person not found in Firestore.');
+                      reject('Person not found in Firestore.');
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error retrieving person from Firestore: ', error);
+                    reject(error);
+                  });
+              } else {
+                console.log('House not found for the user.');
+                reject('House not found for the user.');
+              }
+            })
+            .catch((error) => {
+              console.error('Error retrieving house from Firestore: ', error);
+              reject(error);
+            });
+        }
+      });
+    });
+  }
 }

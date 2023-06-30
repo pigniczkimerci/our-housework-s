@@ -59,7 +59,13 @@ export class ProfilesComponent {
     }
     return null;
   }
-  doneTask(task:Tasks){
-    //TODO
+  completedTask(task:Tasks){
+    this.databaseService.addTaskToPerson(task.resperson, task)
+    .then(() => {
+      this.databaseService.deleteTaskFromFirestore(task);
+      console.log("Task completed");
+    }).catch((error) => {
+      console.log("Error complete task");
+    });
   }
 }
