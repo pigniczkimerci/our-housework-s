@@ -30,13 +30,20 @@ $primaryPalette: mat-palette($mat-indigo);
                         cursor: pointer;
                         margin-left: 5px;
                     }
+                    .done-icon:hover{
+                        color: green;
+                        transition: color 0.3s ease;
+                    }
                 }
             }
         }
         .delete-button{
             align-self: flex-end;
             margin-top: auto;
-           
+        }
+        .delete-button:hover{
+            color: red;
+            transition: color 0.3s ease;
         }
       }
   }

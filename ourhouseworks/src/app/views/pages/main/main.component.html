@@ -60,16 +60,16 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let task">
-          <button mat-icon-button (click)="deleteTask(task)">
+          <button mat-icon-button (click)="deleteTask(task)" class="delete-button">
             <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button (click)="editTask(task)" *ngIf="!task.isEditing">
+          <button mat-icon-button (click)="editTask(task)"  class="edit-button" *ngIf="!task.isEditing">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="updateTask(task)" *ngIf="task.isEditing">
+          <button mat-icon-button (click)="updateTask(task)" class="update-button" *ngIf="task.isEditing">
             <mat-icon>done</mat-icon>
           </button>
-          <button mat-icon-button (click)="cancelEditTask(task)" *ngIf="task.isEditing">
+          <button mat-icon-button (click)="cancelEditTask(task)" class="cancel-button" *ngIf="task.isEditing">
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-cell>

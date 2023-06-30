@@ -1,0 +1,20 @@
+@import "~@angular/material/theming";
+
+$primaryPalette: mat-palette($mat-indigo);
+$trans: color 0.3s ease;
+.delete-button:hover{
+    color: red;
+    transition: $trans
+}
+.edit-button:hover{
+    color: mat-color($primaryPalette);
+    transition: $trans
+}
+.update-button:hover{
+    color: green;
+    transition: $trans
+}
+.cancel-button:hover{
+    color: rgb(140, 0, 0);
+    transition: $trans
+}
