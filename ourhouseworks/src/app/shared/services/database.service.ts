@@ -181,22 +181,29 @@ export class DatabaseService {
                   .doc(houseId)
                   .collection('people');
                 const personQuery = peopleCollectionRef.ref.where('personName', '==', personName);
-                  personQuery
+                personQuery
                   .get()
                   .then((personQuerySnapshot) => {
                     if (!personQuerySnapshot.empty) {
                       const personDocId = personQuerySnapshot.docs[0].id;
                       const personDocRef = peopleCollectionRef.doc(personDocId);
-                      personDocRef
-                        .update({ doneTask: doneTask })
-                        .then(() => {
-                          console.log('Task added to person successfully in Firestore.');
-                          resolve();
-                        })
-                        .catch((error) => {
-                          console.error('Error adding task to person in Firestore: ', error);
-                          reject(error);
-                        });
+                      personDocRef.get().toPromise().then((personDoc) => {
+                        const existingDoneTasks = personDoc!.data()?.['doneTask'];
+                        const updatedDoneTasks = Array.isArray(existingDoneTasks) ? [...existingDoneTasks, doneTask] : [doneTask];
+                        personDocRef
+                          .update({ doneTask: updatedDoneTasks })
+                          .then(() => {
+                            console.log('Task added to person successfully in Firestore.');
+                            resolve();
+                          })
+                          .catch((error) => {
+                            console.error('Error adding task to person in Firestore: ', error);
+                            reject(error);
+                          });
+                      }).catch((error) => {
+                        console.error('Error retrieving person from Firestore: ', error);
+                        reject(error);
+                      });
                     } else {
                       console.log('Person not found in Firestore.');
                       reject('Person not found in Firestore.');
@@ -218,5 +225,5 @@ export class DatabaseService {
         }
       });
     });
-  }
+  }  
 }
