@@ -46,4 +46,48 @@
             </div>
           </div>
     </div>
+    <div class="stat">
+      <h1>Statistics</h1>
+      <div *ngFor="let person of peopleSource" class="person-card">
+        <div class="person-name">{{ person.personName }}</div>
+        <div class="person-tasks">
+          <ul>
+            <li *ngFor="let task of person.doneTask">
+              <span>{{ task.taskName }}</span>
+            </li>
+            <!--<li *ngFor="let task of person.doneTask | keyvalue">
+              <pre>{{ person.doneTask | json }}</pre>
+              <pre>{{ task.value | json }}</pre>
+            </li>-->
+          </ul>
+        </div>
+      </div>
+    </div>
 </div>
+<!--<table>
+  <thead>
+    <tr>
+      <th>Person Name</th>
+      <th>Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let person of peopleSource">
+      <ng-container *ngIf="person.doneTask.length > 0; else noTaskBlock">
+        <tr>
+          <td class="person-name" [attr.rowspan]="person.doneTask.length">{{ person.personName }}</td>
+          <td>{{ person.doneTask[0].taskName }}</td>
+        </tr>
+        <tr *ngFor="let task of person.doneTask.slice(1)">
+          <td>{{ task.taskName }}</td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    <ng-template #noTaskBlock>
+      <tr>
+        <td colspan="2">No task</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>-->
+

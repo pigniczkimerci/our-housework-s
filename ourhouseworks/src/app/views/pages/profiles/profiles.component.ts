@@ -19,16 +19,29 @@ export class ProfilesComponent {
 
   ngOnInit(): void {
     const peopleObservable = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
-    const tasksObservable = this.firestore.collectionGroup('task').valueChanges() as Observable<Task[]>;
+    const tasksObservable = this.firestore.collectionGroup('task').valueChanges() as Observable<Tasks[]>;
     const combinedObservable = combineLatest([
       peopleObservable,
       tasksObservable
     ]).pipe(
       map(([people, tasks]) => {
-        people.forEach(person => {
-          //@ts-ignore
-          const matchingTasks: Tasks[] = tasks.filter(task => task.resperson === person.personName);
-          person.tasks = matchingTasks;
+        people.forEach((person:any) => {
+          const matchingTasks: Tasks[] = tasks.filter((task:any) => task.resperson === person.personName);
+          if(person.doneTask != undefined){
+            person.doneTask = Object.values(person.doneTask);
+            const matchingTasks2 = person.doneTask
+              .filter((task: any) => typeof task === 'object')
+              .map((task: any) => {
+                const matchingStringTask = person.doneTask.find((t: any) => typeof t === 'string' && t !== person.personName);
+                return {
+                  taskName: matchingStringTask || person.personName,
+                  date: { seconds: task.seconds, nanoseconds: task.nanoseconds },
+                  resperson: person.personName,
+                };
+              });
+            person.doneTask = matchingTasks2 as Tasks[];
+          }
+          person.tasks = matchingTasks as Tasks[];
         });
         this.peopleSource = people;
       })
