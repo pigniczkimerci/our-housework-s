@@ -32,9 +32,10 @@ export class ProfilesComponent {
             const matchingTasks2 = person.doneTask
               .filter((task: any) => typeof task === 'object')
               .map((task: any) => {
-                const matchingStringTask = person.doneTask.find((t: any) => typeof t === 'string' && t !== person.personName);
+                const matchingStringTasks = person.doneTask.filter((t: any) => typeof t === 'string' && t !== person.personName);
+                const matchingStringTask = matchingStringTasks.length > 0 ? matchingStringTasks[0] : null;
                 return {
-                  taskName: matchingStringTask || person.personName,
+                  taskName: task.taskName || matchingStringTask,
                   date: { seconds: task.seconds, nanoseconds: task.nanoseconds },
                   resperson: person.personName,
                 };
