@@ -1,0 +1,18 @@
+<div class="recipe-details">
+    <h2>Recipe Details</h2>
+    <div class="recipe-container">
+        <div *ngFor="let recipe of recipeSource" class="person-card">
+          <div class="recipe-name">{{ recipe.recipeName }}</div>
+          <div class="person-name">{{ recipe.description }}</div>
+          <div class="person-tasks">
+            <ul>
+              <li *ngFor="let ing of recipe.ingredients">
+                <span>{{ ing.name }} - </span>
+                <span>{{ ing.quantity }} - </span>
+                <span>{{ ing.unit }} - </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </div>

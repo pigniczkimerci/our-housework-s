@@ -7,6 +7,7 @@ import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { AuthGuard } from './shared/auth/auth.guard';
 import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
+import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfilesComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'recipe', component: RecipesComponent }
+  { path: 'recipe', component: RecipesComponent },
+  { path: 'recipe/:name', component: RecipeDetailsComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

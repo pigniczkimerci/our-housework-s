@@ -34,6 +34,7 @@ import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
 import { ToolbarComponent } from './shared/component/toolbar/toolbar.component';
 import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
+import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RecipesComponent } from './views/pages/recipes/recipes.component';
     SidenavComponent,
     ToolbarComponent,
     ProfilesComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,

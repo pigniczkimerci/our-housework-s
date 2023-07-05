@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
@@ -16,7 +17,7 @@ export class RecipesComponent {
   isContainerVisible: boolean = false;
   recipeSource!: (any)[];
   recipe!: Observable<any[]>;
-  constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore,) {  }
+  constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore, private router: Router) {  }
   ngOnInit(): void {
     this.recipe = this.firestore.collectionGroup('recipe').valueChanges() as Observable<any[]>;
     this.recipe.subscribe((data) => {
@@ -46,5 +47,9 @@ export class RecipesComponent {
   addIngredient() {
     this.ingredients.push({ name: '', quantity: 0, unit: '' });
   }
-
+  navigateToRecipeDetails(recipeName: string | undefined) {
+    if (recipeName !== undefined) {
+      this.router.navigate(['/recipe', recipeName]);
+    }
+  }
 }

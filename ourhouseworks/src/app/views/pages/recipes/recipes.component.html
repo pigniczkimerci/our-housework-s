@@ -40,7 +40,7 @@
 <div class="recipes">
     <h1>Recipes</h1>
     <div class="recipe-list">
-        <div *ngFor="let recipe of recipeSource" class="recipe-container">
+        <div *ngFor="let recipe of recipeSource" class="recipe-container" (click)="navigateToRecipeDetails(recipe.recipeName)">
             <div class="recipe-name">{{ recipe.recipeName }}</div>
         </div>
     </div>
