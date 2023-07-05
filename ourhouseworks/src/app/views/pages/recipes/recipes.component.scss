@@ -5,18 +5,29 @@
     justify-content: center;
     textarea{
         height: 100px;
-    }
+    } 
 }
 .recipe-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
-    .recipe-name{
+    .recipe-container{
         padding: 10px;
         margin: 10px;
         box-sizing: border-box;
         box-shadow: 1px 5px 15px 0px rgba(0, 0, 0, 0.34);
         border-radius: 20px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .recipe-name{
+        font-size: 1.5em;
+    }
+    .recipe-image{
+        width: 50px;
+        display: block; /* Ensures the image takes up its own line */
+        margin: 10px auto; /* Centers the image horizontally */
     }
 }

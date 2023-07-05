@@ -3,8 +3,11 @@
     <div class="recipe-container">
         <div *ngFor="let recipe of recipeSource" class="person-card">
           <div class="recipe-name">{{ recipe.recipeName }}</div>
-          <div class="person-name">{{ recipe.description }}</div>
-          <div class="person-tasks">
+          <ng-container *ngIf="recipe.recPicture !== undefined">
+            <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
+          </ng-container>
+          <div class="recipe-desc">{{ recipe.description }}</div>
+          <div class="recipe-ing">
             <ul>
               <li *ngFor="let ing of recipe.ingredients">
                 <span>{{ ing.name }} - </span>

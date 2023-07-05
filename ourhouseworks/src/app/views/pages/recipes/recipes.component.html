@@ -7,6 +7,7 @@
       <input matInput placeholder="Recipe Name" [(ngModel)]="recipeName" name="recipeName">
     </mat-form-field>
     <br>
+    <input type="file" name="recipeImage" (change)="uploadAndSaveImage($event)">
     <h3>Ingredients</h3>
     <div *ngFor="let ingredient of ingredients; let i = index">
       <mat-form-field>
@@ -41,6 +42,9 @@
     <h1>Recipes</h1>
     <div class="recipe-list">
         <div *ngFor="let recipe of recipeSource" class="recipe-container" (click)="navigateToRecipeDetails(recipe.recipeName)">
+          <ng-container *ngIf="recipe.recPicture !== undefined">
+            <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
+          </ng-container>
             <div class="recipe-name">{{ recipe.recipeName }}</div>
         </div>
     </div>
