@@ -5,6 +5,7 @@ import { Observable, combineLatest, concat, map, merge, take } from 'rxjs';
 import { Person } from 'src/app/shared/models/person';
 import { Tasks } from 'src/app/shared/models/task';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-profiles',
@@ -15,7 +16,7 @@ export class ProfilesComponent {
   personName!: string;
   people!: Observable<(Person)[]>;
   peopleSource!: (Person)[];
-  constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, private auth: AngularFireAuth) { }
+  constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, public nav: NavbarService,) { }
 
   ngOnInit(): void {
     const peopleObservable = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
@@ -48,6 +49,9 @@ export class ProfilesComponent {
       })
     );
     combinedObservable.subscribe();
+    setTimeout(() => {
+      this.nav.show();
+    });
   }
   createPerson() {
     this.databaseService.addPersonToFirestore(this.personName)

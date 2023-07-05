@@ -1,4 +1,7 @@
-<div class="recipe-container">
+<button mat-icon-button color="primary" (click)="toggleContainer()">
+    Add new recipe
+</button>
+<div class="recipe-container" *ngIf="isContainerVisible">
     <h1>New Recipe</h1>
     <mat-form-field>
       <input matInput placeholder="Recipe Name" [(ngModel)]="recipeName" name="recipeName">
@@ -33,4 +36,10 @@
     <button mat-icon-button color="primary" (click)="createRecipe()">
       Add
     </button>
+</div>
+<div class="recipes">
+    <h1>Recipes</h1>
+    <div *ngFor="let recipe of recipeSource">
+        <div class="person-name">{{ recipe.recipeName }} </div>
+    </div>
 </div>
