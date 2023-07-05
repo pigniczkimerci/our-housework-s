@@ -55,6 +55,7 @@
             <li *ngFor="let task of person.doneTask">
               <span>{{ task.taskName }}</span>
             </li>
+            <p>Task completed: {{person.doneTask.length}}</p>
             <!--<li *ngFor="let task of person.doneTask | keyvalue">
               <pre>{{ person.doneTask | json }}</pre>
               <pre>{{ task.value | json }}</pre>
