@@ -8,10 +8,13 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 })
 export class RecipesComponent {
   recipeName!: string;
+  description!: string;
+  ingredients: { name: string, quantity: number, unit: string }[] = [];
+
   constructor(private databaseService: DatabaseService) {  }
   createRecipe() {
-    if (this.recipeName) {
-      this.databaseService.addRecipeToFirestore(this.recipeName)
+    if (this.recipeName, this.description, this.ingredients) {
+      this.databaseService.addRecipeToFirestore(this.recipeName, this.description, this.ingredients)
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
         })
@@ -22,5 +25,7 @@ export class RecipesComponent {
       console.error('Invalid recipe details.');
     }
   }
-
+  addIngredient() {
+    this.ingredients.push({ name: '', quantity: 0, unit: '' });
+  }
 }

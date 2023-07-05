@@ -81,9 +81,9 @@ export class DatabaseService {
       throw error;
     });
   }
-  addRecipeToFirestore(recipeName: string): Promise<void> {
+  addRecipeToFirestore(recipeName: string, description:string, ingredients: Array<any>): Promise<void> {
     return this.getRecipeCollectionRef().then((recipeCollectionRef) => {
-      const recipe = { recipeName: recipeName };
+      const recipe = { recipeName: recipeName, description: description, ingredients: ingredients };
       return recipeCollectionRef.add(recipe);
     }).then(() => {
       console.log('Recipe added successfully to Firestore.');

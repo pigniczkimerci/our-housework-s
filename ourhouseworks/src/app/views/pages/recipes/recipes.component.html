@@ -1,9 +1,36 @@
-<div>
-    <h1>New Recpie</h1>
+<div class="recipe-container">
+    <h1>New Recipe</h1>
     <mat-form-field>
-      <input matInput placeholder="Recipe Name" [(ngModel)]="recipeName" name="taskNam">
+      <input matInput placeholder="Recipe Name" [(ngModel)]="recipeName" name="recipeName">
     </mat-form-field>
-    <button mat-icon-button color="primary" (click)="createRecipe()" >
-        <mat-icon>add</mat-icon>
+    <br>
+    <h3>Ingredients</h3>
+    <div *ngFor="let ingredient of ingredients; let i = index">
+      <mat-form-field>
+        <input matInput placeholder="Ingredient Name" [(ngModel)]="ingredient.name" name="ingredientName{{i}}">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Quantity" [(ngModel)]="ingredient.quantity" name="ingredientQuantity{{i}}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Quantity Unit" [(ngModel)]="ingredient.unit" name="ingredientUnit{{i}}">
+          <mat-option value="kg">kg</mat-option>
+          <mat-option value="g">g</mat-option>
+          <mat-option value="lb">lb</mat-option>
+          <mat-option value="oz">oz</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+    </div>
+    <button mat-icon-button color="primary" (click)="addIngredient()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <br><br>
+    <mat-form-field>
+        <textarea matInput placeholder="Description" [(ngModel)]="description" name="description"></textarea>
+    </mat-form-field>
+    <br>
+    <button mat-icon-button color="primary" (click)="createRecipe()">
+      Add
     </button>
 </div>
