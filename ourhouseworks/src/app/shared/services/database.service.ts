@@ -49,7 +49,15 @@ export class DatabaseService {
       }
     });
   }
-
+  private getRecipeCollectionRef(): Promise<any> {
+    return this.getHouseId().then((houseId) => {
+      if (houseId) {
+        return this.firestore.collection('house').doc(houseId).collection('recipe').ref;
+      } else {
+        throw new Error('House not found for the user.');
+      }
+    });
+  }
   addTaskToFirestore(taskName: string, date: any, selectedMember: Person): Promise<void> {
     return this.getTaskCollectionRef().then((taskCollectionRef) => {
       const task = { taskName: taskName, date: date, resperson: selectedMember };
@@ -73,7 +81,17 @@ export class DatabaseService {
       throw error;
     });
   }
-
+  addRecipeToFirestore(recipeName: string): Promise<void> {
+    return this.getRecipeCollectionRef().then((recipeCollectionRef) => {
+      const recipe = { recipeName: recipeName };
+      return recipeCollectionRef.add(recipe);
+    }).then(() => {
+      console.log('Recipe added successfully to Firestore.');
+    }).catch((error) => {
+      console.error('Error adding task to Firestore: ', error);
+      throw error;
+    });
+  }
   deletePersonFromFirestore(person: Person): Promise<void> {
     return this.getPersonCollectionRef().then((personCollectionRef) => {
       const personQuery = personCollectionRef.where('personName', '==', person.personName);

@@ -6,13 +6,15 @@ import { MainComponent } from './views/pages/main/main.component';
 import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { AuthGuard } from './shared/auth/auth.guard';
 import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
+import { RecipesComponent } from './views/pages/recipes/recipes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'main', component: MainComponent , canActivate: [AuthGuard]},
   { path: 'profile', component: ProfilesComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'recipe', component: RecipesComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

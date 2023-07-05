@@ -2,6 +2,7 @@
     <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode" *ngIf="nav.isVisible">
       <a routerLink="main" routerLinkActive="active-link">Tasks</a>
       <a routerLink="profile" routerLinkActive="active-link">Profile</a>
+      <a routerLink="recipe" routerLinkActive="active-link">Recipes</a>
     </mat-sidenav>
     <mat-sidenav-content>
         <router-outlet></router-outlet>

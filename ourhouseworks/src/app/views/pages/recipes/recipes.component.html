@@ -1,0 +1,9 @@
+<div>
+    <h1>New Recpie</h1>
+    <mat-form-field>
+      <input matInput placeholder="Recipe Name" [(ngModel)]="recipeName" name="taskNam">
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="createRecipe()" >
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
