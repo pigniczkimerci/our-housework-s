@@ -3,6 +3,7 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firest
 import { Person } from '../models/person';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Tasks } from '../models/task';
+import { Recipes } from '../models/recipes';
 
 @Injectable({
   providedIn: 'root'
@@ -131,7 +132,7 @@ export class DatabaseService {
       throw error;
     });
   }
-  deleteRecipeFromFirestore(recipe: any): Promise<void> {
+  deleteRecipeFromFirestore(recipe: Recipes): Promise<void> {
     return this.getRecipeCollectionRef().then((recipeCollectionRef) => {
       const recipeQuery = recipeCollectionRef.where('recipeName', '==', recipe.recipeName);
       return recipeQuery.get().then((recipeQuerySnapshot: { empty: any; docs: { ref: any; }[]; }) => {

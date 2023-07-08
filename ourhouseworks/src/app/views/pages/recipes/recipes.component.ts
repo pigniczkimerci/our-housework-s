@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Recipes } from 'src/app/shared/models/recipes';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
 
@@ -17,12 +18,12 @@ export class RecipesComponent {
   description!: string;
   ingredients: { name: string, quantity: number, unit: string }[] = [];
   isContainerVisible: boolean = false;
-  recipeSource!: (any)[];
-  recipe!: Observable<any[]>;
+  recipeSource!: (Recipes)[];
+  recipe!: Observable<Recipes[]>;
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore, private router: Router) {  }
   ngOnInit(): void {
-    this.recipe = this.firestore.collectionGroup('recipe').valueChanges() as Observable<any[]>;
+    this.recipe = this.firestore.collectionGroup('recipe').valueChanges() as Observable<Recipes[]>;
     this.recipe.subscribe((data) => {
       this.recipeSource = data;
     });
@@ -73,7 +74,7 @@ export class RecipesComponent {
       this.router.navigate(['/recipe', recipeName]);
     }
   }
-  deleteRecipe(recipe: any){
+  deleteRecipe(recipe: Recipes){
     this.databaseService.deleteRecipeFromFirestore(recipe)
     .then(() => {
       console.log("Person deleted successfully");
