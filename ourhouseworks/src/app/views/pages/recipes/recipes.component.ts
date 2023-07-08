@@ -73,5 +73,13 @@ export class RecipesComponent {
       this.router.navigate(['/recipe', recipeName]);
     }
   }
-
+  deleteRecipe(recipe: any){
+    this.databaseService.deleteRecipeFromFirestore(recipe)
+    .then(() => {
+      console.log("Person deleted successfully");
+    })
+    .catch(() => {
+      console.log("Error deleting person");
+    });
+  }
 }

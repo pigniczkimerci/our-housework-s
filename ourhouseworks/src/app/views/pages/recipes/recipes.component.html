@@ -41,11 +41,17 @@
 <div class="recipes">
     <h1>Recipes</h1>
     <div class="recipe-list">
-        <div *ngFor="let recipe of recipeSource" class="recipe-container" (click)="navigateToRecipeDetails(recipe.recipeName)">
+        <div *ngFor="let recipe of recipeSource" class="recipe-container">
           <ng-container *ngIf="recipe.recPicture !== undefined">
             <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
           </ng-container>
             <div class="recipe-name">{{ recipe.recipeName }}</div>
+            <button (click)="navigateToRecipeDetails(recipe.recipeName)">
+                More info
+            </button>
+            <button mat-icon-button class="delete-button" (click)="deleteRecipe(recipe)">
+              <mat-icon>delete</mat-icon>
+            </button>
         </div>
     </div>
 </div>

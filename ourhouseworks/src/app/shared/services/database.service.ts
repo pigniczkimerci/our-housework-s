@@ -131,6 +131,25 @@ export class DatabaseService {
       throw error;
     });
   }
+  deleteRecipeFromFirestore(recipe: any): Promise<void> {
+    return this.getRecipeCollectionRef().then((recipeCollectionRef) => {
+      const recipeQuery = recipeCollectionRef.where('recipeName', '==', recipe.recipeName);
+      return recipeQuery.get().then((recipeQuerySnapshot: { empty: any; docs: { ref: any; }[]; }) => {
+        if (!recipeQuerySnapshot.empty) {
+          const recipeDocRef = recipeQuerySnapshot.docs[0].ref;
+          return recipeDocRef.delete().then(() => {
+            console.log('recipe deleted successfully from Firestore.');
+          });
+        } else {
+          console.log('Recipe not found in Firestore.');
+          throw new Error('Recipe not found in Firestore.');
+        }
+      });
+    }).catch((error) => {
+      console.error('Error deleting recipe from Firestore: ', error);
+      throw error;
+    });
+  }
   editTask(task: Tasks): Promise<void> {
     return this.getTaskCollectionRef().then((taskCollectionRef) => {
       const taskQuery = taskCollectionRef.where('taskName', '==', task.taskName)
