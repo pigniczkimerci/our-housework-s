@@ -1,3 +1,19 @@
+@import "../../../../styles.scss";
+
+h2{
+    color:$mat-yellow;
+}
 .recipe-image{
     width: 100px;
+}
+.recipe-container{
+    background-color: #fff;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    .recipe-name{
+        color: $mat-yellow;
+        font-size: 2em;
+    }
 }

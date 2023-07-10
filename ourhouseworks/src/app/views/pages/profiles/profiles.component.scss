@@ -1,54 +1,71 @@
 @import "~@angular/material/theming";
+@import "../../../../styles.scss";
 
 $primaryPalette: mat-palette($mat-indigo);
-.person-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    width: 80%;
-    .person-card {
-        height: 100%;
-        width: 23%;
-        padding: 10px;
-        margin: 10px;
-        box-sizing: border-box;
-        box-shadow: 1px 5px 15px 0px rgba(0, 0, 0, 0.34);
-        border-radius: 20px;
-        text-align: center;
-        .person-name {
-            margin-bottom: 5px;
-            font-size: 1.3em;
-            color: mat-color($primaryPalette);
-        }
-        .person-tasks{
-            ul{
-                list-style-type: none;
-                padding: 0;
-                li{
-                    padding-bottom: 10px;
-                    .done-icon{
-                        cursor: pointer;
-                        margin-left: 5px;
-                    }
-                    .done-icon:hover{
-                        color: green;
-                        transition: color 0.3s ease;
+
+.new-person,
+.current-people,
+.stat {
+    background-color: #fff;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+}
+.new-person button{
+    color: $mat-blue;
+}
+.current-people {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .person-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto;
+        width: 80%;
+        .person-card {
+            height: 100%;
+            width: 23%;
+            padding: 10px;
+            margin: 10px;
+            box-sizing: border-box;
+            box-shadow: 1px 5px 15px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            .person-name {
+                margin-bottom: 5px;
+                font-size: 1.3em;
+                color: $mat-blue;
+            }
+
+            .person-tasks {
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+
+                    li {
+                        padding-bottom: 10px;
+
+                        .done-icon {
+                            cursor: pointer;
+                            margin-left: 5px;
+                        }
+
+                        .done-icon:hover {
+                            color: green;
+                            transition: color 0.3s ease;
+                        }
                     }
                 }
             }
-        }
-        .delete-button{
-            align-self: flex-end;
-            margin-top: auto;
-        }
-        .delete-button:hover{
-            color: red;
-            transition: color 0.3s ease;
-        }
-      }
-  }
-  
 
-  
-
-  
+            .delete-button {
+                align-self: flex-end;
+                margin-top: auto;
+            }
+            .delete-button:hover {
+                color: red;
+                transition: color 0.3s ease;
+            }
+        }
+    }
+}

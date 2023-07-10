@@ -4,23 +4,41 @@
 $primaryPalette: mat-palette($mat-indigo);
 $trans: color 0.3s ease;
 
-mat-form-field{
-    margin-right: 20px;
+.new-task, .current-task{
+    background-color: #fff;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px;
 }
-
-.delete-button:hover{
-    color: red;
-    transition: $trans
+.new-task{
+    button.mat-icon-button:not(:disabled) {
+        color: $mat-blue; /* Set the color when the button is not disabled */
+      }
 }
-.edit-button:hover{
-    color: $mat-blue;
-    transition: $trans
-}
-.update-button:hover{
-    color: green;
-    transition: $trans
-}
-.cancel-button:hover{
-    color: rgb(140, 0, 0);
-    transition: $trans
+.current-task{
+    margin-top: 2em;
+    mat-header-cell{
+        color: $mat-blue;
+        font-size: 1.1em;
+    }
+    mat-form-field{
+        margin-right: 20px;
+    }
+    .delete-button:hover{
+        color: red;
+        transition: $trans
+    }
+    .edit-button:hover{
+        color: $mat-blue;
+        transition: $trans
+    }
+    .update-button:hover{
+        color: green;
+        transition: $trans
+    }
+    .cancel-button:hover{
+        color: rgb(140, 0, 0);
+        transition: $trans
+    }
+    
 }

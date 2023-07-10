@@ -1,5 +1,5 @@
 <div>
-    <div>
+    <div class="new-person">
         <h1>New person</h1>
         <mat-form-field>
             <input matInput placeholder="Person Name" [(ngModel)]="personName">
@@ -8,7 +8,7 @@
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    <div>
+    <div class="current-people">
         <h1>Current people</h1>
         <!--<mat-table [dataSource]="peopleSource">
             <ng-container matColumnDef="name">

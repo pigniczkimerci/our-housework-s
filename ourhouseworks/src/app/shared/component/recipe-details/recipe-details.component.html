@@ -2,10 +2,10 @@
     <h2>Recipe Details</h2>
     <div class="recipe-container">
         <div *ngFor="let recipe of recipeSource" class="person-card">
-          <div class="recipe-name">{{ recipe.recipeName }}</div>
           <ng-container *ngIf="recipe.recPicture !== undefined">
             <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
           </ng-container>
+          <div class="recipe-name">{{ recipe.recipeName }}</div>
           <div class="recipe-desc">{{ recipe.description }}</div>
           <div class="recipe-ing">
             <ul>

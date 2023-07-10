@@ -2,7 +2,7 @@
 
 .container {
     height: 100vh;
-    background-color: #fff ;
+    background-color: #FFF8F0;
     mat-sidenav{
         width: 150px;
         padding: 20px 0px 0px 20px;
@@ -25,7 +25,7 @@
         .active-link {
             position: relative;
             color: $mat-yellow;
-            background-color: #fff;
+            background-color: #FFF8F0;
             border-radius: 20px 0px 0px 20px;
           }
         .active-link::before {
@@ -37,7 +37,7 @@
             height: 20px;
             width: 30px;
             border-top-right-radius: 40px;
-            box-shadow: 0 -15px 0 0 #fff;
+            box-shadow: 0 -15px 0 0 #FFF8F0;
           }
           .active-link::after {
             content: "";
@@ -48,52 +48,10 @@
             height: 20px;
             width: 30px;
             border-bottom-right-radius: 40px;
-            box-shadow: 0 15px 0 0 #fff;
+            box-shadow: 0 15px 0 0 #FFF8F0;
           }
     }
     mat-sidenav-content{
         padding: 20px;
     }
 }
-  /*.sidenav a {
-    position: relative;
-    display: inline-block;
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 50px;
-    overflow: hidden;
-  }
-  .sidenav a:before,
-  .sidenav a:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background-color: #0099A8;
-  }
-  
-  .sidenav a:before {
-    left: -50%;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    transform: skewX(-30deg);
-  }
-  
-  .sidenav a:after {
-    right: -50%;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    transform: skewX(30deg);
-  }
-  
-  .sidenav a.active-link {
-    background-color: #E19827;
-  }
-  
-  .sidenav a.active-link:before,
-  .sidenav a.active-link:after {
-    background-color: #00616D;
-  }*/

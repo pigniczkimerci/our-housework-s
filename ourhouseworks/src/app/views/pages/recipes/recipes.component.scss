@@ -1,11 +1,27 @@
+@import "../../../../styles.scss";
+.new-recipe-btn{
+    color: $mat-blue
+}
 .recipe-container {
     width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: #fff;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     textarea{
         height: 100px;
-    } 
+    }
+    h3{
+        margin-top: 10px;
+        color: $mat-yellow;
+    }
+    .add-btn{
+        color: $mat-blue;
+    }
 }
 .recipe-list {
     display: grid;
@@ -15,6 +31,7 @@
         padding: 10px;
         margin: 10px;
         box-sizing: border-box;
+        background-color: #fff;
         box-shadow: 1px 5px 15px 0px rgba(0, 0, 0, 0.34);
         border-radius: 20px;
         text-align: center;
@@ -30,4 +47,17 @@
         display: block; /* Ensures the image takes up its own line */
         margin: 10px auto; /* Centers the image horizontally */
     }
+    .more-info{
+        background-color: $mat-blue;
+        border-radius: 20px;
+        padding: 0px 7px;
+        margin: 5px;
+        color:#fff;
+        box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .more-info:hover {
+        background-color: $mat-blue;
+        box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.4);
+      }
 }

@@ -30,3 +30,9 @@ h1 {
         color: $mat-blue !important;
     }
 }
+
+.mat-drawer-inner-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
