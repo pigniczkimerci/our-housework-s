@@ -1,6 +1,6 @@
 
-<div class="sing-in">
-    <mat-card>
+<div class="sign-in">
+    <mat-card class="my-card">
         <h1>Sign in</h1>
         <mat-card-content>
             <mat-form-field appearance="fill">
@@ -12,7 +12,7 @@
             <button mat-raised-button color="primary" type="button" class="loginbtn"
                 (click)="onSignin(emailSignup.value, passwordSignup.value)">Login
             </button>
-            <p>You dont have an account? <a routerLink="register">Click here!</a></p>
+            <p>You dont have an account? <a routerLink="/register">Click here!</a></p>
         </mat-card-content>
     </mat-card>
 </div>

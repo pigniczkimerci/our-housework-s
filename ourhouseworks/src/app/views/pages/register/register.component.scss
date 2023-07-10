@@ -1,9 +1,39 @@
-mat-card {
-    max-width: 400px;
-    margin: 2em auto;
-    text-align: center;
+.my-card {
+  max-width: 500px;
+  margin: 2em auto;
+  text-align: center;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
+
+  h1 {
+    color: #E19827;
+    font-size: 2em;
   }
-  
+
   mat-form-field {
     display: block;
   }
+  button{
+    background-color: #00616D;
+    border-radius: 20px;
+    padding: 2px 20px;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  button:hover {
+    background-color: #004851;
+    box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.4);
+  }
+}
+
+::ng-deep {
+  .mat-form-field .mat-form-field-flex {
+    background-color: white !important;
+  }
+
+  .mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #00616D !important;
+  }
+}
