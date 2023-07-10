@@ -1,3 +1,4 @@
+@import '../../../../styles.scss';
 .sign-in {
   margin-top: 200px;
 
@@ -9,14 +10,14 @@
     padding: 20px;
     box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
     h1 {
-      color: #E19827;
+      color: $mat-yellow;
       font-size: 2em;
     }
     mat-form-field {
       display: block;  
     }
     button{
-      background-color: #00616D;
+      background-color: $mat-blue;
       border-radius: 20px;
       padding: 2px 20px;
       box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
@@ -31,12 +32,3 @@
     }
   }
 }    
-::ng-deep {
-  .mat-form-field .mat-form-field-flex{
-    background-color: white !important; 
-  }
-  .mat-form-field-ripple {
-    /*change color of underline when focused*/
-    background-color: #00616D !important;
-   }
-}

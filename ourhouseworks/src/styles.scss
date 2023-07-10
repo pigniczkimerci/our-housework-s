@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+$mat-blue: #00616D;
+$mat-yellow: #E19827;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1 {
+    color: $mat-yellow;
+}
+
+::ng-deep {
+    .mat-form-field .mat-form-field-flex {
+        background-color: white !important;
+    }
+
+    .mat-form-field-ripple {
+        /*change color of underline when focused*/
+        background-color: $mat-blue !important;
+    }
+
+    .mat-focused .mat-form-field-label {
+        color: $mat-blue !important;
+    }
+}

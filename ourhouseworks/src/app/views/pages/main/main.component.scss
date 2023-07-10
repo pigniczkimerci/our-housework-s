@@ -1,13 +1,19 @@
-@import "~@angular/material/theming";
+@import "@angular/material/theming";
+@import '../../../../styles.scss';
 
 $primaryPalette: mat-palette($mat-indigo);
 $trans: color 0.3s ease;
+
+mat-form-field{
+    margin-right: 20px;
+}
+
 .delete-button:hover{
     color: red;
     transition: $trans
 }
 .edit-button:hover{
-    color: mat-color($primaryPalette);
+    color: $mat-blue;
     transition: $trans
 }
 .update-button:hover{
