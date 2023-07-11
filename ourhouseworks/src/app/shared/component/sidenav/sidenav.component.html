@@ -1,16 +1,22 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav class="sidenav" #sidenav mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode" *ngIf="nav.isVisible">
+  <mat-sidenav class="sidenav" #sidenav mode="side" *ngIf="nav.isVisible">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon class="btn">menu</mat-icon>
+    </button>
     <a routerLink="main" routerLinkActive="active-link">
-        <mat-icon>list_alt</mat-icon>Tasks
+      <mat-icon>list_alt</mat-icon>
+      <span>Task</span>
     </a>
     <a routerLink="profile" routerLinkActive="active-link">
-      <mat-icon>person_outline</mat-icon>Profile
+      <mat-icon>person_outline</mat-icon>
+      <span>Profile</span>
     </a>
     <a routerLink="recipe" routerLinkActive="active-link">
-      <mat-icon>local_dining</mat-icon>Recipes
+      <mat-icon>local_dining</mat-icon>
+      <span>Recipes</span>
     </a>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content #content [class.sidenav-opened]="sidenavOpened">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

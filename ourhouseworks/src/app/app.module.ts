@@ -13,6 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
 
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
@@ -31,7 +32,6 @@ import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { MainComponent } from './views/pages/main/main.component';
 import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
-import { ToolbarComponent } from './shared/component/toolbar/toolbar.component';
 import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
 import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
@@ -43,7 +43,6 @@ import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe
     RegisterComponent,
     MainComponent,
     SidenavComponent,
-    ToolbarComponent,
     ProfilesComponent,
     RecipesComponent,
     RecipeDetailsComponent
@@ -63,6 +62,7 @@ import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
+    MatListModule,
     
     FormsModule,
 

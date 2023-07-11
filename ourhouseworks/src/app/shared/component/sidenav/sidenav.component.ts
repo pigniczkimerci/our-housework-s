@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild     } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthGuard } from '../../auth/auth.guard';
 import { AuthService } from '../../auth/auth.service';
@@ -11,13 +11,17 @@ import { NavbarService } from '../../services/navbar.service';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent {
+export class SidenavComponent{
   @ViewChild('sidenav') sidenav!: MatSidenav;
+
   isLoggedIn: boolean = false;
   isSidenavOpen: boolean= true;
   sidenavMode: MatDrawerMode = 'side';
+  isExpanded = false;
+  sidenavOpened = false; 
 
   toggleSidenav(): void {
+    this.sidenavOpened = !this.sidenavOpened;
     this.sidenav.toggle();
   }
   constructor(public nav: NavbarService, private authService: AuthService, private breakpointObserver: BreakpointObserver) {

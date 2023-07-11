@@ -8,10 +8,16 @@
         padding: 20px 0px 0px 20px;
         background-color: $mat-yellow;
         border: none;
+        visibility: visible !important;
+        display:block !important;
+        transition-duration: 300ms;
+        .btn{
+            color: #FFF8F0;
+        }
         a {
             display: flex;
-            align-items: center;
             text-decoration: none;
+            align-items: center;
             color: #fff;
             margin-bottom: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,14 +25,14 @@
             padding: 10px;
             margin-top: 20px;
             mat-icon{
-                margin-right: 10px;
+                margin-right: 13px;
             }
         }
         .active-link {
             position: relative;
             color: $mat-yellow;
             background-color: #FFF8F0;
-            border-radius: 20px 0px 0px 20px;
+            border-radius: 30px 0px 0px 30px;
           }
         .active-link::before {
             content: "";
@@ -35,7 +41,7 @@
             bottom: -20px;
             right: -6px;
             height: 20px;
-            width: 30px;
+            width: 20px;
             border-top-right-radius: 40px;
             box-shadow: 0 -15px 0 0 #FFF8F0;
           }
@@ -46,12 +52,23 @@
             top: -20px;
             right: -6px;
             height: 20px;
-            width: 30px;
+            width: 20px;
             border-bottom-right-radius: 40px;
             box-shadow: 0 15px 0 0 #FFF8F0;
           }
     }
-    mat-sidenav-content{
+    mat-sidenav-content {
         padding: 20px;
-    }
+        margin-left: 65px; /* Initial value */
+        transition: margin-left 300ms;
+        &.sidenav-opened {
+          margin-left: 150px !important; /* Updated value when sidenav is opened */
+        }
+      }
 }
+
+mat-sidenav:not(.mat-drawer-opened) {
+    transform: translate3d(0, 0, 0) !important;
+    width: 65px !important;
+    overflow: hidden;
+  }
