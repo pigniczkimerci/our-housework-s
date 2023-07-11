@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, CollectionReference, DocumentReference } from '@angular/fire/compat/firestore';
 import { Person } from '../models/person';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Tasks } from '../models/task';
@@ -59,33 +59,43 @@ export class DatabaseService {
       }
     });
   }
-  addDocumentToFirestore(collectionRef: any, data: any): Promise<void> {
-    return collectionRef.add(data)
-      .then(() => {
-        console.log('Document added successfully to Firestore.');
-      })
-      .catch((error: Error) => {
-        console.error('Error adding document to Firestore: ', error);
+  addToFirestore(collectionRef: any, data: any, successMessage: string) {
+    return collectionRef
+      .then((ref: any) => ref.add(data))
+      .then(() => console.log(successMessage))
+      .catch((error: any) => {
+        console.error(`Error adding data to Firestore: ${error}`);
         throw error;
       });
   }
-  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Array<any>): Promise<void> {
-    const recipeCollectionRef = this.getRecipeCollectionRef();
-    const recipe = { recipeName: recipeName, recPicture: recipePicture, description: description, ingredients: ingredients };
-    return this.addDocumentToFirestore(recipeCollectionRef, recipe);
+  
+  addTaskToFirestore(taskName: string, date: any, selectedMember: Person): Promise<void> {
+    const task = { taskName, date, resperson: selectedMember };
+    return this.addToFirestore(
+      this.getTaskCollectionRef(),
+      task,
+      'Task added successfully to Firestore.'
+    );
   }
   
   addPersonToFirestore(personName: string): Promise<void> {
-    const personCollectionRef = this.getPersonCollectionRef();
-    const person = { personName: personName };
-    return this.addDocumentToFirestore(personCollectionRef, person);
+    const person = { personName };
+    return this.addToFirestore(
+      this.getPersonCollectionRef(),
+      person,
+      'Person added successfully to Firestore.'
+    );
   }
   
-  addTaskToFirestore(taskName: string, date: any, selectedMember: Person): Promise<void> {
-    const taskCollectionRef = this.getTaskCollectionRef();
-    const task = { taskName: taskName, date: date, resperson: selectedMember };
-    return this.addDocumentToFirestore(taskCollectionRef, task);
+  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Array<any>): Promise<void> {
+    const recipe = { recipeName, recPicture: recipePicture, description, ingredients };
+    return this.addToFirestore(
+      this.getRecipeCollectionRef(),
+      recipe,
+      'Recipe added successfully to Firestore.'
+    );
   }
+
   editTask(task: Tasks): Promise<void> {
     return this.getTaskCollectionRef().then((taskCollectionRef) => {
       const taskQuery = taskCollectionRef.where('taskName', '==', task.taskName)
@@ -200,38 +210,37 @@ export class DatabaseService {
     });
   }
   //DELETE FORM DATABASE
-  deletePersonFromFirestore(person: Person): Promise<void> {
+  deleteDocumentFromFirestore(collectionRef: CollectionReference, field: string, value: string): Promise<void> {
+    const query = collectionRef.where(field, '==', value);
+  
+    return query.get().then((querySnapshot: { empty: any; docs: { ref: any; }[]; }) => {
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        return docRef.delete().then(() => {
+          console.log('Document deleted successfully from Firestore.');
+        });
+      } else {
+        console.log('Document not found in Firestore.');
+        throw new Error('Document not found in Firestore.');
+      }
+    }).catch((error: Error) => {
+      console.error('Error deleting document from Firestore: ', error);
+      throw error;
+    });
+  }
+  
+  async deletePersonFromFirestore(person: Person): Promise<void> {
     const personCollectionRef = this.getPersonCollectionRef();
-    return this.deleteDocumentFromFirestore(personCollectionRef, 'personName', person.personName);
+    return this.deleteDocumentFromFirestore(await personCollectionRef, 'personName', person.personName);
   }
   
-  deleteTaskFromFirestore(task: Tasks): Promise<void> {
+  async deleteTaskFromFirestore(task: Tasks): Promise<void> {
     const taskCollectionRef = this.getTaskCollectionRef();
-    return this.deleteDocumentFromFirestore(taskCollectionRef, 'taskName', task.taskName);
+    return this.deleteDocumentFromFirestore(await taskCollectionRef, 'taskName', task.taskName);
   }
   
-  deleteRecipeFromFirestore(recipe: Recipes): Promise<void> {
+  async deleteRecipeFromFirestore(recipe: Recipes): Promise<void> {
     const recipeCollectionRef = this.getRecipeCollectionRef();
-    return this.deleteDocumentFromFirestore(recipeCollectionRef, 'recipeName', recipe.recipeName);
+    return this.deleteDocumentFromFirestore(await recipeCollectionRef, 'recipeName', recipe.recipeName);
   }
-  deleteDocumentFromFirestore(collectionRef: any, fieldName: string, fieldValue: any): Promise<void> {
-    const query = collectionRef.where(fieldName, '==', fieldValue);
-    return query.get()
-      .then((querySnapshot: { empty: any; docs: { ref: any; }[]; }) => {
-        if (!querySnapshot.empty) {
-          const docRef = querySnapshot.docs[0].ref;
-          return docRef.delete()
-            .then(() => {
-              console.log('Document deleted successfully from Firestore.');
-            });
-        } else {
-          console.log('Document not found in Firestore.');
-          throw new Error('Document not found in Firestore.');
-        }
-      })
-      .catch((error: Error) => {
-        console.error('Error deleting document from Firestore: ', error);
-        throw error;
-      });
-  }  
 }
