@@ -18,10 +18,17 @@
       </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Quantity Unit" [(ngModel)]="ingredient.unit" name="ingredientUnit{{i}}">
+          <mat-option value="l">l</mat-option>
+          <mat-option value="dl">dl</mat-option>
+          <mat-option value="cl">cl</mat-option>
+          <mat-option value="ml">ml</mat-option>
           <mat-option value="kg">kg</mat-option>
-          <mat-option value="g">g</mat-option>
-          <mat-option value="lb">lb</mat-option>
-          <mat-option value="oz">oz</mat-option>
+          <mat-option value="dkg">dkg</mat-option>
+          <mat-option value="tk">tk</mat-option>
+          <mat-option value="ek">ek</mat-option>
+          <mat-option value="ek">kk</mat-option>
+          <mat-option value="ek">mk</mat-option>
+          <mat-option value="ek">csipet</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
