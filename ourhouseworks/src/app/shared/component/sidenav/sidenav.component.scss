@@ -1,8 +1,8 @@
 @import "../../../../styles.scss";
 
 .container {
-    height: 100vh;
-    background-color: #FFF8F0;
+    background-color: $mat-yellow;
+    min-height:100%;
     mat-sidenav{
         width: 150px;
         padding: 20px 0px 0px 20px;
@@ -59,10 +59,14 @@
     }
     mat-sidenav-content {
         padding: 20px;
-        margin-left: 65px; /* Initial value */
+        margin: 10px 10px 10px 65px;
         transition: margin-left 300ms;
+        background-color: #FFF8F0;
+        height: calc(100% - 1px);
+        border-radius: 20px;
+        height: 94vh;
         &.sidenav-opened {
-          margin-left: 150px !important; /* Updated value when sidenav is opened */
+          margin-left: 150px !important;
         }
       }
 }
