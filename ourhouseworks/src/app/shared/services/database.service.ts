@@ -114,17 +114,29 @@ export class DatabaseService {
         // Document with the same "name" exists, update its ingredients array
         const existingDoc = querySnapshot.docs[0];
         const existingIngredients = existingDoc.data().ingredients || [];
-        const updatedIngredients = [...existingIngredients, ...ingredients];
-        await existingDoc.ref.update({ ingredients: updatedIngredients });
+        // Merge the existing and new ingredients, handling duplicates
+        const mergedIngredients = ingredients.reduce((merged, ingredient) => {
+          const existingIngredient = merged.find((item) => item.name === ingredient.name);
+          if (existingIngredient) {
+            // Ingredient already exists, add the quantities
+            existingIngredient.quantity += Number(ingredient.quantity)
+          } else {
+            // Ingredient doesn't exist, add it to the merged array
+            merged.push({ ...ingredient });
+          }
+          return merged;
+        }, [...existingIngredients]);
+  
+        await existingDoc.ref.update({ ingredients: mergedIngredients });
       } else {
         // No document with the same "name" exists, create a new document
         const newDoc = {
           name: recipeName,
           ingredients: ingredients
         };
-        console.log(newDoc);
         await fridgeCollectionRef.add(newDoc);
       }
+  
       console.log('Fridge added successfully to Firestore.');
     } catch (error) {
       console.error('Error adding fridge to Firestore:', error);
