@@ -4,6 +4,8 @@ import { Person } from '../models/person';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Tasks } from '../models/task';
 import { Recipes } from '../models/recipes';
+import { Ingredients } from '../models/ingredients';
+import { Fridge } from '../models/fridge';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +61,15 @@ export class DatabaseService {
       }
     });
   }
+  private getFridgeCollectionRef(): Promise<any> {
+    return this.getHouseId().then((houseId) => {
+      if (houseId) {
+        return this.firestore.collection('house').doc(houseId).collection('fridge').ref;
+      } else {
+        throw new Error('Fridge not found for the user.');
+      }
+    });
+  }
   addToFirestore(collectionRef: any, data: any, successMessage: string) {
     return collectionRef
       .then((ref: any) => ref.add(data))
@@ -87,7 +98,7 @@ export class DatabaseService {
     );
   }
   
-  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Array<any>): Promise<void> {
+  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Array<Ingredients>): Promise<void> {
     const recipe = { recipeName, recPicture: recipePicture, description, ingredients };
     return this.addToFirestore(
       this.getRecipeCollectionRef(),
@@ -95,7 +106,14 @@ export class DatabaseService {
       'Recipe added successfully to Firestore.'
     );
   }
-
+  addFridgeToFirestore(recipeName: string, ingredients: Array<Ingredients>): Promise<void> {
+    const fridge = { recipeName, ingredients };
+    return this.addToFirestore(
+      this.getFridgeCollectionRef(),
+      fridge,
+      'Fridge added successfully to Firestore.'
+    );
+  }
   editTask(task: Tasks): Promise<void> {
     return this.getTaskCollectionRef().then((taskCollectionRef) => {
       const taskQuery = taskCollectionRef.where('taskName', '==', task.taskName)
@@ -242,5 +260,10 @@ export class DatabaseService {
   async deleteRecipeFromFirestore(recipe: Recipes): Promise<void> {
     const recipeCollectionRef = this.getRecipeCollectionRef();
     return this.deleteDocumentFromFirestore(await recipeCollectionRef, 'recipeName', recipe.recipeName);
+  }
+  async deleteFrigeFromFirestore(fridge: Fridge): Promise<void> {
+    const fridgeCollectionRef = this.getFridgeCollectionRef();
+    console.log(fridgeCollectionRef);
+    return this.deleteDocumentFromFirestore(await fridgeCollectionRef, 'recipeName', fridge.recipeName);
   }
 }

@@ -1,0 +1,15 @@
+<div class="fridge" *ngFor="let fridge of fridgeSource">
+    <h2>{{ fridge.recipeName }}</h2>
+    <button mat-icon-button (click)="cooked(fridge)">
+        <mat-icon>done</mat-icon>
+      </button>
+    <div class="fridge-ing">
+        <ul>
+          <li *ngFor="let ing of fridge.ingredients">
+            <span>{{ ing.name }} - </span>
+            <span>{{ ing.quantity }}</span>
+            <span>{{ ing.unit }} </span>
+          </li>
+        </ul>
+      </div>
+</div>

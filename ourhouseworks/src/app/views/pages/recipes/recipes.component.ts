@@ -53,7 +53,6 @@ export class RecipesComponent {
   }
   
   createRecipe() {
-    console.log(this.recipePicture);
     if (this.recipeName, this.recipePicture, this.description, this.ingredients) {
       this.databaseService.addRecipeToFirestore(this.recipeName,this.recipePicture, this.description, this.ingredients)
         .then(() => {

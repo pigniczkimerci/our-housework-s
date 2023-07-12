@@ -3,6 +3,9 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NavbarService } from '../../services/navbar.service';
+import { Ingredients } from '../../models/ingredients';
+import { Recipes } from '../../models/recipes';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -13,8 +16,8 @@ export class RecipeDetailsComponent {
   recipeName!: string;
   recipe!: Observable<any>;
   recipeSource!: any[];
-  
-  constructor(private route: ActivatedRoute,private firestore: AngularFirestore, public nav: NavbarService) { }
+
+  constructor(private databaseService: DatabaseService, private route: ActivatedRoute,private firestore: AngularFirestore, public nav: NavbarService) { }
   
   ngOnInit(): void {
     const recipeNameParam = this.route.snapshot.paramMap.get('name');
@@ -31,4 +34,13 @@ export class RecipeDetailsComponent {
       this.nav.show();
     });
   }
+  cookIt(name: string, ing: Array<Ingredients>){
+      this.databaseService.addFridgeToFirestore(name, ing)
+        .then(() => {
+          console.log('Recipe added successfully to Firestore.');
+        })
+        .catch((error: any) => {
+          console.error('Error adding recipe to Firestore: ', error);
+        });
+    } 
 }

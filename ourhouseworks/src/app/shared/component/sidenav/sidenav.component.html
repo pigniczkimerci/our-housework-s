@@ -15,6 +15,10 @@
       <mat-icon>local_dining</mat-icon>
       <span>Recipes</span>
     </a>
+    <a routerLink="fridge" routerLinkActive="active-link">
+      <mat-icon>kitchen</mat-icon>
+      <span>Fridge</span>
+    </a>
   </mat-sidenav>
   <mat-sidenav-content #content [class.sidenav-opened]="sidenavOpened" [ngClass]="{'login-page': isLoginPage}">
     <router-outlet></router-outlet>

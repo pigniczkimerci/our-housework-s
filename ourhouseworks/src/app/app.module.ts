@@ -35,6 +35,7 @@ import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
 import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
 import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
+import { FridgeComponent } from './views/pages/fridge/fridge.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe
     SidenavComponent,
     ProfilesComponent,
     RecipesComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    FridgeComponent
   ],
   imports: [
     BrowserModule,

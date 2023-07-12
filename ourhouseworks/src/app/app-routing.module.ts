@@ -8,11 +8,13 @@ import { AuthGuard } from './shared/auth/auth.guard';
 import { SidenavComponent } from './shared/component/sidenav/sidenav.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
 import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
+import { FridgeComponent } from './views/pages/fridge/fridge.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'main', component: MainComponent , canActivate: [AuthGuard]},
   { path: 'profile', component: ProfilesComponent , canActivate: [AuthGuard]},
+  { path: 'fridge', component: FridgeComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recipe', component: RecipesComponent },
