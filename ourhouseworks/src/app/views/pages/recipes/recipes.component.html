@@ -1,5 +1,5 @@
 <button class="new-recipe-btn" mat-icon-button color="primary" (click)="toggleContainer()">
-    Add new recipe
+    <span>Add new recipe</span>
 </button>
 <div class="recipe-container" *ngIf="isContainerVisible">
     <h1>New Recipe</h1>
@@ -55,12 +55,14 @@
             <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
           </ng-container>
             <div class="recipe-name">{{ recipe.recipeName }}</div>
-            <button mat-raised-button class="more-info" (click)="navigateToRecipeDetails(recipe.recipeName)">
+            <div class="btns">
+              <button mat-raised-button class="more-info" (click)="navigateToRecipeDetails(recipe.recipeName)">
                 More info
-            </button>
-            <button mat-icon-button class="delete-button" (click)="deleteRecipe(recipe)">
-              <mat-icon>delete</mat-icon>
-            </button>
+              </button>
+              <button mat-icon-button class="delete-button" (click)="deleteRecipe(recipe)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
         </div>
     </div>
 </div>

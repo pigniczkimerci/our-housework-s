@@ -21,6 +21,12 @@
     }
     .add-btn{
         color: $mat-blue;
+        transition: 0.5s ease;
+    }
+    .add-btn:hover{
+        color: #fff;
+        background-color:$mat-blue;
+        border-radius: 20px;
     }
 }
 .recipe-list {
@@ -32,7 +38,7 @@
         margin: 10px;
         box-sizing: border-box;
         background-color: #fff;
-        box-shadow: 1px 5px 15px 0px rgba(0, 0, 0, 0.34);
+            box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         text-align: center;
         display: flex;
@@ -41,23 +47,38 @@
     }
     .recipe-name{
         font-size: 1.5em;
+        color: $mat-yellow;
     }
     .recipe-image{
-        width: 50px;
-        display: block; /* Ensures the image takes up its own line */
-        margin: 10px auto; /* Centers the image horizontally */
+        width: 150px;
+        display: block;
+        margin: 10px auto;
+        border-radius: 10px;
     }
-    .more-info{
-        background-color: $mat-blue;
-        border-radius: 20px;
-        padding: 0px 7px;
-        margin: 5px;
-        color:#fff;
-        box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      }
-      .more-info:hover {
-        background-color: $mat-blue;
-        box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.4);
+    
+      .btns{
+        display: flex;
+        align-items: center;
+        .more-info{
+            background-color: #3795a152;
+            border-radius: 3px;
+            border-radius: 20px;
+            line-height: 30px;
+            margin: 15px 5px;
+            color:$mat-blue;
+            box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.2);
+            transition: 0.4s ease;
+          }
+          .more-info:hover {
+            background-color: $mat-blue;
+            color: #fff;
+          }
+          .delete-button{
+            color: #000000b8;
+            transition: 0.4s ease;
+          }
+          .delete-button:hover{
+            color: rgb(172, 0, 0);
+          }
       }
 }

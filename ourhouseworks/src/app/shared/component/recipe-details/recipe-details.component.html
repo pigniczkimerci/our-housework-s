@@ -1,22 +1,27 @@
 <div class="recipe-details">
-    <h2>Recipe Details</h2>
+   <!-- <h2>Recipe Details</h2> -->
     <div class="recipe-container">
         <div *ngFor="let recipe of recipeSource" class="person-card">
-          <ng-container *ngIf="recipe.recPicture !== undefined">
-            <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
-          </ng-container>
           <div class="recipe-name">{{ recipe.recipeName }}</div>
-          <div class="recipe-desc">{{ recipe.description }}</div>
-          <div class="recipe-ing">
-            <ul>
-              <li *ngFor="let ing of recipe.ingredients">
-                <span>{{ ing.name }} - </span>
-                <span>{{ ing.quantity }} - </span>
-                <span>{{ ing.unit }} - </span>
-              </li>
-            </ul>
+          <div class="content">
+            <div class="desc">
+              <div class="recipe-ing">
+                <ul>
+                  <li *ngFor="let ing of recipe.ingredients">
+                    <span>{{ ing.name }} - </span>
+                    <span>{{ ing.quantity }}</span>
+                    <span>{{ ing.unit }} </span>
+                  </li>
+                </ul>
+              </div>
+              
+            </div>
+            <div *ngIf="recipe.recPicture !== undefined">
+              <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
+            </div>
           </div>
-          <button (click)="cookIt(recipe.recipeName, recipe.ingredients)">Cook it</button>
+          <div class="recipe-desc">{{ recipe.description }}</div>
+          <button mat-button class="cook-it" (click)="cookIt(recipe.recipeName, recipe.ingredients)">Cook it</button>
         </div>
       </div>
   </div>

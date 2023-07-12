@@ -2,9 +2,7 @@
 
 h2{
     color:$mat-yellow;
-}
-.recipe-image{
-    width: 100px;
+    text-align: center;
 }
 .recipe-container{
     background-color: #fff;
@@ -12,8 +10,42 @@ h2{
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
     .recipe-name{
         color: $mat-yellow;
         font-size: 2em;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .recipe-image{
+        width: 500px;
+        border-radius: 5px;
+    }
+    .content{
+        display: flex;
+        justify-content: center;
+        margin: 30px 0px;
+        .recipe-ing{
+            background-color: $mat-blue;
+            border-radius: 20px;
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            font-size: 1.2em;
+            li{
+                margin: 5px;
+            }
+        }
+    }
+    .recipe-desc{
+        font-size: 1.2em;
+        text-align: center;
+    }
+    .cook-it{
+       background-color: $mat-yellow;
+       border-radius: 30px;
+       color: #fff;
     }
 }
