@@ -20,7 +20,6 @@ export class DatabaseService {
       return this.firestore.collection('house', (ref) => ref.where('email', '==', user!.email));
     });
   }
-
   private getHouseId(): Promise<string | null> {
     return this.getHouseCollectionRef().then((houseCollectionRef) => {
       return houseCollectionRef.get().toPromise().then((querySnapshot: { empty: any; docs: { id: any; }[]; }) => {
@@ -63,8 +62,33 @@ export class DatabaseService {
   }
   private getFridgeCollectionRef(): Promise<any> {
     return this.getHouseId().then((houseId) => {
-      if (houseId) {
+      if (houseId) { 
         return this.firestore.collection('house').doc(houseId).collection('fridge').ref;
+      } else {
+        throw new Error('Fridge not found for the user.');
+      }
+    });
+  }
+  private getIngredientsCollectionRef(): Promise<any> {
+    /*return this.getHouseId().then((houseId) => {
+      if (houseId) {
+        const fridgeCollectionRef = this.firestore.collection('house').doc(houseId).collection('fridge').ref;
+        return fridgeCollectionRef.limit(1).get().then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const docRef = querySnapshot.docs[0].ref;
+            return docRef;
+          } else {
+            throw new Error('Fridge not found for the user.');
+          }
+        });
+      } else {
+        throw new Error('House ID not found for the user.');
+      }
+    });*/
+    return this.getHouseId().then((houseId) => {
+      if (houseId) {
+        console.log("we");
+        return this.firestore.collection('house').doc(houseId).collection('fridge').doc("cN85r6KX7DS7MhvbeknX").ref;
       } else {
         throw new Error('Fridge not found for the user.');
       }
@@ -230,7 +254,6 @@ export class DatabaseService {
   //DELETE FORM DATABASE
   deleteDocumentFromFirestore(collectionRef: CollectionReference, field: string, value: string): Promise<void> {
     const query = collectionRef.where(field, '==', value);
-  
     return query.get().then((querySnapshot: { empty: any; docs: { ref: any; }[]; }) => {
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
@@ -263,7 +286,35 @@ export class DatabaseService {
   }
   async deleteFrigeFromFirestore(fridge: Fridge): Promise<void> {
     const fridgeCollectionRef = this.getFridgeCollectionRef();
-    console.log(fridgeCollectionRef);
     return this.deleteDocumentFromFirestore(await fridgeCollectionRef, 'recipeName', fridge.recipeName);
+  }
+  async deleteIngredientsFromFridge(ing: any): Promise<void> {
+    try {
+      const fridgeCollectionRef = await this.getFridgeCollectionRef();
+      const fridgeSnapshot = await fridgeCollectionRef.get();
+  
+      if (!fridgeSnapshot.empty) {
+        fridgeSnapshot.forEach((doc: { data: () => any; ref: { update: (arg0: { ingredients: any; }) => any; }; }) => {
+          const fridgeData = doc.data();
+          const ingredients = fridgeData.ingredients;
+  
+          // Find the index of the ingredient to be deleted
+          const index = ingredients.findIndex((item: any) => item.name === ing.name);
+  
+          if (index !== -1) {
+            // Remove the ingredient from the array
+            ingredients.splice(index, 1);
+  
+            // Update the "ingredients" array in the Firestore document
+            return doc.ref.update({ ingredients });
+          }
+        });
+      } else {
+        throw new Error('No documents found in the "Fridge" collection.');
+      }
+    } catch (error) {
+      console.error('Error deleting ingredient from Fridge collection:', error);
+      throw error;
+    }
   }
 }
