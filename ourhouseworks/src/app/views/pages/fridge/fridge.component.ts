@@ -14,6 +14,10 @@ import { NavbarService } from 'src/app/shared/services/navbar.service';
 export class FridgeComponent {
   fridge!: Observable<any[]>;
   fridgeSource!: any[];
+  isContainerVisible: boolean = false;
+  name!: string;
+  quantity!: number;
+  unit!: string;
   constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore) {  }
   
   ngOnInit(): void {
@@ -55,9 +59,7 @@ export class FridgeComponent {
       });
   }
   alreadyInFridge(ing:Ingredients){
-    console.log(ing)
     this.databaseService.deleteIngredientsFromFridge(ing)
-  
       .then(() => {
         console.log("Fridge element deleted successfully");
       })
@@ -65,4 +67,19 @@ export class FridgeComponent {
         console.log("Error deleting fridge element");
       });
   }
+  toggleContainer() {
+    this.isContainerVisible = !this.isContainerVisible;
+  }
+  addIngredient(name:string, quantity:number, unit: string){
+    const rName = "General";
+    const ingredient = {name, quantity, unit};
+    console.log(rName);
+    this.databaseService.addFridgeToFirestore(rName, [ingredient])
+        .then(() => {
+          console.log('Recipe added successfully to Firestore.');
+        })
+        .catch((error: any) => {
+          console.error('Error adding recipe to Firestore: ', error);
+        });
+    } 
 }

@@ -69,31 +69,6 @@ export class DatabaseService {
       }
     });
   }
-  private getIngredientsCollectionRef(): Promise<any> {
-    /*return this.getHouseId().then((houseId) => {
-      if (houseId) {
-        const fridgeCollectionRef = this.firestore.collection('house').doc(houseId).collection('fridge').ref;
-        return fridgeCollectionRef.limit(1).get().then((querySnapshot) => {
-          if (!querySnapshot.empty) {
-            const docRef = querySnapshot.docs[0].ref;
-            return docRef;
-          } else {
-            throw new Error('Fridge not found for the user.');
-          }
-        });
-      } else {
-        throw new Error('House ID not found for the user.');
-      }
-    });*/
-    return this.getHouseId().then((houseId) => {
-      if (houseId) {
-        console.log("we");
-        return this.firestore.collection('house').doc(houseId).collection('fridge').doc("cN85r6KX7DS7MhvbeknX").ref;
-      } else {
-        throw new Error('Fridge not found for the user.');
-      }
-    });
-  }
   addToFirestore(collectionRef: any, data: any, successMessage: string) {
     return collectionRef
       .then((ref: any) => ref.add(data))
@@ -130,13 +105,31 @@ export class DatabaseService {
       'Recipe added successfully to Firestore.'
     );
   }
-  addFridgeToFirestore(recipeName: string, ingredients: Array<Ingredients>): Promise<void> {
-    const fridge = { recipeName, ingredients };
-    return this.addToFirestore(
-      this.getFridgeCollectionRef(),
-      fridge,
-      'Fridge added successfully to Firestore.'
-    );
+  async addFridgeToFirestore(recipeName: string, ingredients: Array<Ingredients>): Promise<void> {
+    try {
+      const fridgeCollectionRef = await this.getFridgeCollectionRef();
+      // Check if a document with the same "name" already exists in the collection
+      const querySnapshot = await fridgeCollectionRef.where('name', '==', recipeName).get();
+      if (!querySnapshot.empty) {
+        // Document with the same "name" exists, update its ingredients array
+        const existingDoc = querySnapshot.docs[0];
+        const existingIngredients = existingDoc.data().ingredients || [];
+        const updatedIngredients = [...existingIngredients, ...ingredients];
+        await existingDoc.ref.update({ ingredients: updatedIngredients });
+      } else {
+        // No document with the same "name" exists, create a new document
+        const newDoc = {
+          name: recipeName,
+          ingredients: ingredients
+        };
+        console.log(newDoc);
+        await fridgeCollectionRef.add(newDoc);
+      }
+      console.log('Fridge added successfully to Firestore.');
+    } catch (error) {
+      console.error('Error adding fridge to Firestore:', error);
+      throw error;
+    }
   }
   editTask(task: Tasks): Promise<void> {
     return this.getTaskCollectionRef().then((taskCollectionRef) => {

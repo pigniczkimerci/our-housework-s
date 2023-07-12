@@ -1,20 +1,44 @@
+<button class="new-ingr-btn" mat-button (click)="toggleContainer()">
+  <span>Add new ingredients</span>
+</button>
+<div class="new" *ngIf="isContainerVisible">
+  <mat-form-field>
+    <input matInput placeholder="Ingredient Name" [(ngModel)]="name" name="ingredientName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Ingredient Quantity" [(ngModel)]="quantity" name="ingredientQuantity">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Quantity Unit" [(ngModel)]="unit" name="ingredientUnit">
+      <mat-option value="ek">darab</mat-option>
+      <mat-option value="kg">kg</mat-option>
+      <mat-option value="l">l</mat-option>
+      <mat-option value="l">karton</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button class="add-btn" mat-icon-button (click)="addIngredient(name, quantity, unit)">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
 <div class="fridge" *ngFor="let fridge of fridgeSource">
   <!--<button mat-button (click)="fridgeToJSON()">Export to JSON</button>-->
-    <h2>{{ fridge.recipeName }}</h2>
-      <button mat-icon-button (click)="cooked(fridge)">
-        <mat-icon>done</mat-icon>
-      </button>
-    <div class="fridge-ing">
-        <ul>
-          <li *ngFor="let ing of fridge.ingredients">
-            <span>{{ ing.name }} - </span>
-            <span>{{ ing.quantity }}</span>
-            <span>{{ ing.unit }} </span>
-            <button mat-icon-button (click)="alreadyInFridge(ing)">
-              <mat-icon>done</mat-icon>
-            </button>
-          </li>
-          
-        </ul>
-      </div>
+  <div class="name">
+    <h2>{{ fridge.name }}</h2>
+    <button mat-icon-button (click)="cooked(fridge)">
+      <mat-icon>done</mat-icon>
+    </button>
+  </div>
+  <div class="fridge-ing">
+    <ul>
+      <li *ngFor="let ing of fridge.ingredients">
+        <span>{{ ing.name }} - </span>
+        <span>{{ ing.quantity }}</span>
+        <span>{{ ing.unit }} </span>
+        <button mat-icon-button (click)="alreadyInFridge(ing)">
+          <mat-icon>done</mat-icon>
+        </button>
+      </li>
+
+    </ul>
+  </div>
 </div>
