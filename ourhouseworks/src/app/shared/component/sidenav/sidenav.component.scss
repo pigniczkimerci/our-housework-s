@@ -57,6 +57,9 @@
             box-shadow: 0 15px 0 0 #FFF8F0;
           }
     }
+    .login-page {
+      margin: 10px 10px 10px 10px !important;
+    }
     mat-sidenav-content {
         padding: 20px;
         margin: 10px 10px 10px 65px;
@@ -68,7 +71,8 @@
         &.sidenav-opened {
           margin-left: 150px !important;
         }
-      }
+    }
+
 }
 
 mat-sidenav:not(.mat-drawer-opened) {

@@ -16,7 +16,7 @@
       <span>Recipes</span>
     </a>
   </mat-sidenav>
-  <mat-sidenav-content #content [class.sidenav-opened]="sidenavOpened">
+  <mat-sidenav-content #content [class.sidenav-opened]="sidenavOpened" [ngClass]="{'login-page': isLoginPage}">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

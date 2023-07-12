@@ -1,38 +1,51 @@
-import { Component, Input, ViewChild     } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Component, Input, ViewChild } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthGuard } from '../../auth/auth.guard';
 import { AuthService } from '../../auth/auth.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { NavbarService } from '../../services/navbar.service';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent{
+export class SidenavComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isLoggedIn: boolean = false;
-  isSidenavOpen: boolean= true;
+  isSidenavOpen: boolean = true;
   sidenavMode: MatDrawerMode = 'side';
   isExpanded = false;
-  sidenavOpened = false; 
-
+  sidenavOpened = false;
+  isLoginPage!: boolean;
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
     this.sidenav.toggle();
   }
-  constructor(public nav: NavbarService, private authService: AuthService, private breakpointObserver: BreakpointObserver) {
+  constructor(public nav: NavbarService, private authService: AuthService, private breakpointObserver: BreakpointObserver, private router: Router, private locationStrategy: LocationStrategy) {
     this.observeScreenSizeChanges();
-
+    this.isLoginPage = false;
   }
 
   ngOnInit() {
-    console.log(this.isLoggedIn);
     this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+    });
+    const currentUrl = this.locationStrategy.path();
+    if (currentUrl === '/login' || currentUrl === '/register') {
+      this.isLoginPage = true;
+    } else {
+      this.isLoginPage = false;
+    }
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = this.router.url === '/login' || this.router.url === '/register';
+        console.log(this.isLoginPage);
+      }
     });
   }
   private observeScreenSizeChanges(): void {
