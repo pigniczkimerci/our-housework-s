@@ -116,10 +116,10 @@ export class DatabaseService {
         const existingIngredients = existingDoc.data().ingredients || [];
         // Merge the existing and new ingredients, handling duplicates
         const mergedIngredients = ingredients.reduce((merged, ingredient) => {
-          const existingIngredient = merged.find((item) => item.name === ingredient.name);
+        const existingIngredient: Ingredients = merged.find((item) => item.name === ingredient.name);
           if (existingIngredient) {
             // Ingredient already exists, add the quantities
-            existingIngredient.quantity += Number(ingredient.quantity)
+            existingIngredient.quantity = (Number(existingIngredient.quantity) + Number(ingredient.quantity));
           } else {
             // Ingredient doesn't exist, add it to the merged array
             merged.push({ ...ingredient });
@@ -291,7 +291,7 @@ export class DatabaseService {
   }
   async deleteFrigeFromFirestore(fridge: Fridge): Promise<void> {
     const fridgeCollectionRef = this.getFridgeCollectionRef();
-    return this.deleteDocumentFromFirestore(await fridgeCollectionRef, 'recipeName', fridge.recipeName);
+    return this.deleteDocumentFromFirestore(await fridgeCollectionRef, 'name', fridge.name);
   }
   async deleteIngredientsFromFridge(ing: any): Promise<void> {
     try {
