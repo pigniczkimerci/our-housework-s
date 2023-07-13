@@ -56,6 +56,13 @@
         <textarea matInput placeholder="Description" [(ngModel)]="description" name="description"></textarea>
     </mat-form-field>
     <br>
+    <mat-form-field>
+      <input matInput placeholder="Temperature" [(ngModel)]="temperature" name="tempreature">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Time </mat-label>
+      <input matInput type="time" [(ngModel)]="time">
+    </mat-form-field>
     <button class="add-btn" mat-icon-button color="primary" (click)="createRecipe()">
       Add
     </button>

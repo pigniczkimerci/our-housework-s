@@ -6,6 +6,7 @@ import { Tasks } from '../models/task';
 import { Recipes } from '../models/recipes';
 import { Group, Ingredients } from '../models/ingredients';
 import { Fridge } from '../models/fridge';
+import { Time } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -97,8 +98,8 @@ export class DatabaseService {
     );
   }
   
-  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Group[]): Promise<void> {
-    const recipe = { recipeName, recPicture: recipePicture, description, ingredients };
+  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Group[], temperature: number, time: Time): Promise<void> {
+    const recipe = { recipeName, recPicture: recipePicture, description, ingredients, temperature, time };
     return this.addToFirestore(
       this.getRecipeCollectionRef(),
       recipe,

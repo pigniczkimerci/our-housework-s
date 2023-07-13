@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
@@ -22,10 +23,13 @@ export class RecipesComponent {
   recipeSource!: (Recipes)[];
   recipe!: Observable<Recipes[]>;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  groupName!: string; // Input value for "For what"
+  groupName!: string;
+  temperature!: number;
+  time!: Time;
+  cookingTimeControl = new FormControl();
   ingredientGroups: { name: string; ingredient: Ingredients[] }[] = []; // Array to store ingredient groups
 
-  constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore, private router: Router) {  }
+  constructor(private databaseService: DatabaseService, public nav: NavbarService, private firestore: AngularFirestore, private router: Router) { }
   ngOnInit(): void {
     this.recipe = this.firestore.collectionGroup('recipe').valueChanges() as Observable<Recipes[]>;
     this.recipe.subscribe((data) => {
@@ -55,8 +59,8 @@ export class RecipesComponent {
       };
     }
   }
-  
-  
+
+
   /*addIngredient() {
     this.ingredients.push({ name: '', quantity: 0, unit: '' });
   }*/
@@ -65,14 +69,14 @@ export class RecipesComponent {
       this.router.navigate(['/recipe', recipeName]);
     }
   }
-  deleteRecipe(recipe: Recipes){
+  deleteRecipe(recipe: Recipes) {
     this.databaseService.deleteRecipeFromFirestore(recipe)
-    .then(() => {
-      console.log("Person deleted successfully");
-    })
-    .catch(() => {
-      console.log("Error deleting person");
-    });
+      .then(() => {
+        console.log("Person deleted successfully");
+      })
+      .catch(() => {
+        console.log("Error deleting person");
+      });
   }
   addGroup() {
     if (this.groupName) {
@@ -81,14 +85,11 @@ export class RecipesComponent {
     }
   }
   addIngredient(group: Group) {
-    group.ingredient.push({ name: '', quantity: 0, unit: ''});
+    group.ingredient.push({ name: '', quantity: 0, unit: '' });
   }
- createRecipe() {
-  console.log(this.recipeName);
-  console.log(this.groupName);
-  console.log(this.ingredientGroups);
-    if (this.recipeName, this.recipePicture, this.description, this.ingredients) {
-      this.databaseService.addRecipeToFirestore(this.recipeName,this.recipePicture, this.description, this.ingredientGroups)
+  createRecipe() {
+    if (this.recipeName, this.recipePicture, this.description, this.ingredients, this.temperature, this.time) {
+      this.databaseService.addRecipeToFirestore(this.recipeName, this.recipePicture, this.description, this.ingredientGroups,this.temperature, this.time)
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
         })

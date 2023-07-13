@@ -15,6 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -67,6 +70,7 @@ import { FridgeComponent } from './views/pages/fridge/fridge.component';
     MatListModule,
     
     FormsModule,
+    ReactiveFormsModule,
 
     AppRoutingModule,
     AngularFireModule,
