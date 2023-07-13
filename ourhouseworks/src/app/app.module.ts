@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -39,6 +39,7 @@ import { ProfilesComponent } from './views/pages/profiles/profiles.component';
 import { RecipesComponent } from './views/pages/recipes/recipes.component';
 import { RecipeDetailsComponent } from './shared/component/recipe-details/recipe-details.component';
 import { FridgeComponent } from './views/pages/fridge/fridge.component';
+import { CalendarComponent } from './views/pages/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { FridgeComponent } from './views/pages/fridge/fridge.component';
     ProfilesComponent,
     RecipesComponent,
     RecipeDetailsComponent,
-    FridgeComponent
+    FridgeComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,7 @@ import { FridgeComponent } from './views/pages/fridge/fridge.component';
     MatSelectModule,
     MatTableModule,
     MatListModule,
+    FullCalendarModule,
     
     FormsModule,
     ReactiveFormsModule,

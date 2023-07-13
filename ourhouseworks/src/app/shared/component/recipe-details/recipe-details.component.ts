@@ -25,7 +25,7 @@ export class RecipeDetailsComponent {
     if (recipeNameParam) {
       this.recipeName = recipeNameParam;
       this.recipe = this.firestore.collectionGroup('recipe', ref => ref.where('recipeName', '==', this.recipeName)).valueChanges() as Observable<Recipes[]>;
-      this.recipe.subscribe((values) => {
+      this.recipe.subscribe((values: Recipes[]) => {
         this.recipeSource = values;
       });
     } else {

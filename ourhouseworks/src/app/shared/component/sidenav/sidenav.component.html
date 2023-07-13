@@ -19,6 +19,10 @@
       <mat-icon>kitchen</mat-icon>
       <span>Fridge</span>
     </a>
+    <a routerLink="calendar" routerLinkActive="active-link">
+      <mat-icon>calendar_today</mat-icon>
+      <span>Calendar</span>
+    </a>
   </mat-sidenav>
   <mat-sidenav-content #content [class.sidenav-opened]="sidenavOpened" [ngClass]="{'login-page': isLoginPage}">
     <router-outlet></router-outlet>
