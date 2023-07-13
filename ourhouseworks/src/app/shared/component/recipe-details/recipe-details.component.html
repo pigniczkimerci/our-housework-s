@@ -5,23 +5,23 @@
           <div class="recipe-name">{{ recipe.recipeName }}</div>
           <div class="content">
             <div class="desc">
-              <div class="recipe-ing">
+              <div class="recipe-ing" *ngFor="let ing of recipe.ingredients">
+                <h3>{{ ing.name }}</h3>
                 <ul>
-                  <li *ngFor="let ing of recipe.ingredients">
-                    <span>{{ ing.name }} - </span>
-                    <span>{{ ing.quantity }}</span>
-                    <span>{{ ing.unit }} </span>
+                  <li *ngFor="let g of ing.ingredient">
+                    <span>{{ g.name }} - </span>
+                    <span>{{ g.quantity }} </span>
+                    <span>{{ g.unit }} </span>
                   </li>
                 </ul>
               </div>
-              
             </div>
             <div *ngIf="recipe.recPicture !== undefined">
               <img class="recipe-image" [src]="'data:image/jpeg;base64,' + recipe.recPicture" alt="Recipe Image">
             </div>
           </div>
           <div class="recipe-desc">{{ recipe.description }}</div>
-          <button mat-button class="cook-it" (click)="cookIt(recipe.recipeName, recipe.ingredients)">Cook it</button>
+          <!--<button mat-button class="cook-it" (click)="cookIt(recipe.recipeName, recipe.ingredientGroups">Cook it</button>-->
         </div>
       </div>
   </div>

@@ -12,8 +12,8 @@ import { NavbarService } from 'src/app/shared/services/navbar.service';
   styleUrls: ['./fridge.component.scss']
 })
 export class FridgeComponent {
-  fridge!: Observable<any[]>;
-  fridgeSource!: any[];
+  fridge!: Observable<Fridge[]>;
+  fridgeSource!: Fridge[];
   isContainerVisible: boolean = false;
   name!: string;
   quantity!: number;
@@ -21,7 +21,7 @@ export class FridgeComponent {
   constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore) {  }
   
   ngOnInit(): void {
-    this.fridge = this.firestore.collectionGroup('fridge').valueChanges() as Observable<any[]>;
+    this.fridge = this.firestore.collectionGroup('fridge').valueChanges() as Observable<Fridge[]>;
     this.fridge.subscribe((data) => {
       this.fridgeSource = data;
     });
@@ -32,7 +32,7 @@ export class FridgeComponent {
   fridgeToJSON() {
     const fridgeData = this.fridgeSource.map(fridge => {
       return {
-        recipeName: fridge.recipeName,
+        recipeName: fridge.name,
         ingredients: fridge.ingredients.map((ingredient: { name: any; quantity: any; unit: any; }) => {
           return {
             name: ingredient.name,
@@ -74,12 +74,12 @@ export class FridgeComponent {
     const rName = "General";
     const ingredient = {name, quantity, unit};
     console.log(rName);
-   /* this.databaseService.addFridgeToFirestore(rName, [ingredient])
+    this.databaseService.addFridgeToFirestore(rName, [ingredient])
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
         })
         .catch((error: any) => {
           console.error('Error adding recipe to Firestore: ', error);
-        });*/
+        });
     } 
 }

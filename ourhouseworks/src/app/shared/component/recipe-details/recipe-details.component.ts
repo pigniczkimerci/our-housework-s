@@ -14,8 +14,8 @@ import { DatabaseService } from '../../services/database.service';
 })
 export class RecipeDetailsComponent {
   recipeName!: string;
-  recipe!: Observable<any>;
-  recipeSource!: any[];
+  recipe!: Observable<Recipes[]>;
+  recipeSource!: Recipes[];
 
   constructor(private databaseService: DatabaseService, private route: ActivatedRoute,private firestore: AngularFirestore, public nav: NavbarService) { }
   
@@ -23,7 +23,7 @@ export class RecipeDetailsComponent {
     const recipeNameParam = this.route.snapshot.paramMap.get('name');
     if (recipeNameParam) {
       this.recipeName = recipeNameParam;
-      this.recipe = this.firestore.collectionGroup('recipe', ref => ref.where('recipeName', '==', this.recipeName)).valueChanges();
+      this.recipe = this.firestore.collectionGroup('recipe', ref => ref.where('recipeName', '==', this.recipeName)).valueChanges() as Observable<Recipes[]>;
       this.recipe.subscribe((values) => {
         this.recipeSource = values;
       });

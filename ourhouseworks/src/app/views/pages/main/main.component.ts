@@ -26,7 +26,6 @@ export class MainComponent implements OnInit {
   tableDataSource: Tasks[] = [];
 
   updatedTask!: Tasks;
-  taskID!: any;
 
   constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
   
