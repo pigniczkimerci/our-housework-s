@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Group, Ingredients } from 'src/app/shared/models/ingredients';
 import { Recipes } from 'src/app/shared/models/recipes';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
@@ -21,6 +22,9 @@ export class RecipesComponent {
   recipeSource!: (Recipes)[];
   recipe!: Observable<Recipes[]>;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  groupName!: string; // Input value for "For what"
+  ingredientGroups: { name: string; ingredient: Ingredients[] }[] = []; // Array to store ingredient groups
+
   constructor(private databaseService: DatabaseService, public nav: NavbarService,private firestore: AngularFirestore, private router: Router) {  }
   ngOnInit(): void {
     this.recipe = this.firestore.collectionGroup('recipe').valueChanges() as Observable<Recipes[]>;
@@ -52,22 +56,10 @@ export class RecipesComponent {
     }
   }
   
-  createRecipe() {
-    if (this.recipeName, this.recipePicture, this.description, this.ingredients) {
-      this.databaseService.addRecipeToFirestore(this.recipeName,this.recipePicture, this.description, this.ingredients)
-        .then(() => {
-          console.log('Recipe added successfully to Firestore.');
-        })
-        .catch((error: any) => {
-          console.error('Error adding recipe to Firestore: ', error);
-        });
-    } else {
-      console.error('Invalid recipe details.');
-    }
-  }
-  addIngredient() {
+  
+  /*addIngredient() {
     this.ingredients.push({ name: '', quantity: 0, unit: '' });
-  }
+  }*/
   navigateToRecipeDetails(recipeName: string | undefined) {
     if (recipeName !== undefined) {
       this.router.navigate(['/recipe', recipeName]);
@@ -81,5 +73,30 @@ export class RecipesComponent {
     .catch(() => {
       console.log("Error deleting person");
     });
+  }
+  addGroup() {
+    if (this.groupName) {
+      this.ingredientGroups.push({ name: this.groupName, ingredient: [] });
+      this.groupName = ''; // Reset input value
+    }
+  }
+  addIngredient(group: Group) {
+    group.ingredient.push({ name: '', quantity: 0, unit: ''});
+  }
+ createRecipe() {
+  console.log(this.recipeName);
+  console.log(this.groupName);
+  console.log(this.ingredientGroups);
+    if (this.recipeName, this.recipePicture, this.description, this.ingredients) {
+      this.databaseService.addRecipeToFirestore(this.recipeName,this.recipePicture, this.description, this.ingredientGroups)
+        .then(() => {
+          console.log('Recipe added successfully to Firestore.');
+        })
+        .catch((error: any) => {
+          console.error('Error adding recipe to Firestore: ', error);
+        });
+    } else {
+      console.error('Invalid recipe details.');
+    }
   }
 }

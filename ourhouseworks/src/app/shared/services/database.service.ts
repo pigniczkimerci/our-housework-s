@@ -4,7 +4,7 @@ import { Person } from '../models/person';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Tasks } from '../models/task';
 import { Recipes } from '../models/recipes';
-import { Ingredients } from '../models/ingredients';
+import { Group, Ingredients } from '../models/ingredients';
 import { Fridge } from '../models/fridge';
 
 @Injectable({
@@ -97,7 +97,7 @@ export class DatabaseService {
     );
   }
   
-  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Array<Ingredients>): Promise<void> {
+  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Group[]): Promise<void> {
     const recipe = { recipeName, recPicture: recipePicture, description, ingredients };
     return this.addToFirestore(
       this.getRecipeCollectionRef(),

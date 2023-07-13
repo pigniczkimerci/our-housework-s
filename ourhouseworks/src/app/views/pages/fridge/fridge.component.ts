@@ -74,12 +74,12 @@ export class FridgeComponent {
     const rName = "General";
     const ingredient = {name, quantity, unit};
     console.log(rName);
-    this.databaseService.addFridgeToFirestore(rName, [ingredient])
+   /* this.databaseService.addFridgeToFirestore(rName, [ingredient])
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
         })
         .catch((error: any) => {
           console.error('Error adding recipe to Firestore: ', error);
-        });
+        });*/
     } 
 }

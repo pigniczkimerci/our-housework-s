@@ -3,3 +3,8 @@ export interface Ingredients {
     quantity: number,
     unit: string
 }
+
+export interface Group {
+    name: string;
+    ingredient: Ingredients[];
+  }

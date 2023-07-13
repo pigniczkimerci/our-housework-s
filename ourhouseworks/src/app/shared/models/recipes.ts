@@ -1,8 +1,8 @@
-import { Ingredients } from "./ingredients";
+import { Group, Ingredients } from "./ingredients";
 
 export interface Recipes {
     description: string,
-    ingredients: Array<Ingredients>,
+    groups: Group[],
     recPicture: string,
-    recipeName: string
+    recipeName: string,
 }

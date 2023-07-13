@@ -28,6 +28,10 @@
         background-color:$mat-blue;
         border-radius: 20px;
     }
+    .ing, .forwhat {
+        display: flex;
+        flex-wrap: wrap;
+      }
 }
 .recipe-list {
     display: grid;
