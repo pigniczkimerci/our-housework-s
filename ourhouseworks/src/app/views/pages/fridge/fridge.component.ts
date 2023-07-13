@@ -29,25 +29,6 @@ export class FridgeComponent {
       this.nav.show();
     });
   }
-  fridgeToJSON() {
-    const fridgeData = this.fridgeSource.map(fridge => {
-      return {
-        recipeName: fridge.name,
-        ingredients: fridge.ingredients.map((ingredient: { name: any; quantity: any; unit: any; }) => {
-          return {
-            name: ingredient.name,
-            quantity: ingredient.quantity,
-            unit: ingredient.unit
-          };
-        })
-      };
-    });
-  
-    const jsonData = JSON.stringify(fridgeData, null, 2);
-    console.log(jsonData); // Log the JSON data for testing purposes
-  
-    // Optionally, you can save the JSON data to a file or perform any other desired actions
-  }
   
   cooked(fridge:Fridge){
     this.databaseService.deleteFrigeFromFirestore(fridge)
@@ -59,6 +40,7 @@ export class FridgeComponent {
       });
   }
   alreadyInFridge(ing:Ingredients){
+    console.log(ing)
     this.databaseService.deleteIngredientsFromFridge(ing)
       .then(() => {
         console.log("Fridge element deleted successfully");
@@ -73,8 +55,9 @@ export class FridgeComponent {
   addIngredient(name:string, quantity:number, unit: string){
     const rName = "General";
     const ingredient = {name, quantity, unit};
+    const group = { name: "general", ingredient: [ingredient] };
     console.log(rName);
-    this.databaseService.addFridgeToFirestore(rName, [ingredient])
+    this.databaseService.addFridgeToFirestore(rName, [group] )
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
         })

@@ -106,7 +106,7 @@ export class DatabaseService {
       'Recipe added successfully to Firestore.'
     );
   }
-  async addFridgeToFirestore(recipeName: string, ingredients: Array<Ingredients>): Promise<void> {
+  async addFridgeToFirestore(recipeName: string, ingredients: Group[]): Promise<void> {
     try {
       const fridgeCollectionRef = await this.getFridgeCollectionRef();
       // Check if a document with the same "name" already exists in the collection
@@ -116,14 +116,16 @@ export class DatabaseService {
         const existingDoc = querySnapshot.docs[0];
         const existingIngredients = existingDoc.data().ingredients || [];
         // Merge the existing and new ingredients, handling duplicates
-        const mergedIngredients = ingredients.reduce((merged, ingredient) => {
-        const existingIngredient: Ingredients = merged.find((item) => item.name === ingredient.name);
-          if (existingIngredient) {
+        const mergedIngredients = ingredients.reduce((merged, ing) => {
+        const existingIngredientIndex = merged.findIndex((item) => item.name === ing.name);
+        if (existingIngredientIndex !== -1) {
             // Ingredient already exists, add the quantities
-            existingIngredient.quantity = (Number(existingIngredient.quantity) + Number(ingredient.quantity));
-          } else {
+            merged[existingIngredientIndex].ingredient.forEach((item: { quantity: number }) => {
+            item.quantity = Number(item.quantity) + ing.ingredient.reduce((sum: number, ingredient) => sum + Number(ingredient.quantity), 0);
+          });
+        } else {
             // Ingredient doesn't exist, add it to the merged array
-            merged.push({ ...ingredient });
+            merged.push({ ...ing });
           }
           return merged;
         }, [...existingIngredients]);
@@ -294,28 +296,29 @@ export class DatabaseService {
     const fridgeCollectionRef = this.getFridgeCollectionRef();
     return this.deleteDocumentFromFirestore(await fridgeCollectionRef, 'name', fridge.name);
   }
-  async deleteIngredientsFromFridge(ing: any): Promise<void> {
+  async deleteIngredientsFromFridge(ing: Ingredients): Promise<void> {
     try {
       const fridgeCollectionRef = await this.getFridgeCollectionRef();
       const fridgeSnapshot = await fridgeCollectionRef.get();
-  
       if (!fridgeSnapshot.empty) {
-        fridgeSnapshot.forEach((doc: { data: () => any; ref: { update: (arg0: { ingredients: any; }) => any; }; }) => {
+        fridgeSnapshot.forEach((doc: { data: () => any; ref: { update: (arg0: { ingredients: any }) => any } }) => {
           const fridgeData = doc.data();
           const ingredients = fridgeData.ingredients;
-  
-          // Find the index of the ingredient to be deleted
-          const index = ingredients.findIndex((item: any) => item.name === ing.name);
-  
-          if (index !== -1) {
-            // Remove the ingredient from the array
-            ingredients.splice(index, 1);
-  
-            // Update the "ingredients" array in the Firestore document
-            return doc.ref.update({ ingredients });
+          if (ingredients && Array.isArray(ingredients) && ingredients.length > 0) {
+            const ingredientArray = ingredients[0].ingredient;
+            // Find the index of the ingredient to be deleted
+            const index = ingredientArray.findIndex((item: any) => item.name === ing.name);
+            if (index !== -1) {
+              // Remove the ingredient from the array
+              ingredientArray.splice(index, 1);
+      
+              // Update the "ingredients" array in the Firestore document
+              return doc.ref.update({ ingredients: [{ ingredient: ingredientArray }] });
+            }
           }
         });
-      } else {
+      }
+       else {
         throw new Error('No documents found in the "Fridge" collection.');
       }
     } catch (error) {

@@ -21,7 +21,11 @@
             </div>
           </div>
           <div class="recipe-desc">{{ recipe.description }}</div>
-          <!--<button mat-button class="cook-it" (click)="cookIt(recipe.recipeName, recipe.ingredientGroups">Cook it</button>-->
+          <div class="recipe-time">
+            <span> {{ recipe.temperature }}</span>
+            <span>{{ recipe.time }}</span>
+          </div>
+          <button mat-button class="cook-it" (click)="cookIt(recipe.recipeName, recipe.ingredients)">Cook it</button>
         </div>
       </div>
   </div>

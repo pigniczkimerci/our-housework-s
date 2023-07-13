@@ -28,13 +28,13 @@
       <mat-icon>done</mat-icon>
     </button>
   </div>
-  <div class="fridge-ing">
+  <div class="fridge-ing" *ngFor="let ing of fridge.ingredients">
     <ul>
-      <li *ngFor="let ing of fridge.ingredients">
-        <span>{{ ing.name }} - </span>
-        <span>{{ ing.quantity }}</span>
-        <span>{{ ing.unit }} </span>
-        <button mat-icon-button (click)="alreadyInFridge(ing)">
+      <li *ngFor="let i of ing.ingredient">
+        <span>{{ i.name }} - </span>
+        <span>{{ i.quantity }}</span>
+        <span>{{ i.unit }} </span>
+        <button mat-icon-button (click)="alreadyInFridge(i)">
           <mat-icon>done</mat-icon>
         </button>
       </li>

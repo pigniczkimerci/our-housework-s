@@ -1,6 +1,6 @@
-import { Ingredients } from "./ingredients";
+import { Group, Ingredients } from "./ingredients";
 
 export interface Fridge {
-    ingredients: Array<Ingredients>,
+    ingredients: Group[],
     name: string
 }
