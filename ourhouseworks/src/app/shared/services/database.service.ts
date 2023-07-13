@@ -4,9 +4,10 @@ import { Person } from '../models/person';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Tasks } from '../models/task';
 import { Recipes } from '../models/recipes';
-import { Group, Ingredients } from '../models/ingredients';
+import { Ingredients } from '../models/ingredients';
 import { Fridge } from '../models/fridge';
 import { Time } from '@angular/common';
+import { IGroup } from '../models/i-group';
 
 @Injectable({
   providedIn: 'root'
@@ -98,7 +99,7 @@ export class DatabaseService {
     );
   }
   
-  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: Group[], temperature: number, time: Time): Promise<void> {
+  addRecipeToFirestore(recipeName: string, recipePicture: any, description: string, ingredients: IGroup[], temperature: number, time: Time): Promise<void> {
     const recipe = { recipeName, recPicture: recipePicture, description, ingredients, temperature, time };
     return this.addToFirestore(
       this.getRecipeCollectionRef(),
@@ -106,7 +107,7 @@ export class DatabaseService {
       'Recipe added successfully to Firestore.'
     );
   }
-  async addFridgeToFirestore(recipeName: string, ingredients: Group[]): Promise<void> {
+  async addFridgeToFirestore(recipeName: string, ingredients: IGroup[]): Promise<void> {
     try {
       const fridgeCollectionRef = await this.getFridgeCollectionRef();
       // Check if a document with the same "name" already exists in the collection

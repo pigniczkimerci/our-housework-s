@@ -1,6 +1,6 @@
-import { Group, Ingredients } from "./ingredients";
+import { IGroup } from "./i-group";
 
 export interface Fridge {
-    ingredients: Group[],
+    ingredients: IGroup[],
     name: string
 }

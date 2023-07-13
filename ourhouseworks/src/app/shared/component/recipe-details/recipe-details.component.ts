@@ -3,9 +3,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NavbarService } from '../../services/navbar.service';
-import { Group, Ingredients } from '../../models/ingredients';
+import { Ingredients } from '../../models/ingredients';
 import { Recipes } from '../../models/recipes';
 import { DatabaseService } from '../../services/database.service';
+import { IGroup } from '../../models/i-group';
 
 @Component({
   selector: 'app-recipe-details',
@@ -34,7 +35,7 @@ export class RecipeDetailsComponent {
       this.nav.show();
     });
   }
-  cookIt(name: string, ing: Group[]){
+  cookIt(name: string, ing: IGroup[]){
       this.databaseService.addFridgeToFirestore(name, ing)
         .then(() => {
           console.log('Recipe added successfully to Firestore.');

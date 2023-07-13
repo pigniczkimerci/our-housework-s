@@ -4,7 +4,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Group, Ingredients } from 'src/app/shared/models/ingredients';
+import { IGroup } from 'src/app/shared/models/i-group';
+import { Ingredients } from 'src/app/shared/models/ingredients';
 import { Recipes } from 'src/app/shared/models/recipes';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
@@ -84,7 +85,7 @@ export class RecipesComponent {
       this.groupName = ''; // Reset input value
     }
   }
-  addIngredient(group: Group) {
+  addIngredient(group: IGroup) {
     group.ingredient.push({ name: '', quantity: 0, unit: '' });
   }
   createRecipe() {

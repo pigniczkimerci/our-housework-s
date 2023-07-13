@@ -4,7 +4,3 @@ export interface Ingredients {
     unit: string
 }
 
-export interface Group {
-    name: string;
-    ingredient: Ingredients[];
-  }

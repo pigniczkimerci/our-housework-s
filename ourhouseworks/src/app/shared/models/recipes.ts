@@ -1,9 +1,10 @@
 import { Time } from "@angular/common";
-import { Group, Ingredients } from "./ingredients";
+import { Ingredients } from "./ingredients";
+import { IGroup } from "./i-group";
 
 export interface Recipes {
     description: string,
-    ingredients: Group[],
+    ingredients: IGroup[],
     recPicture: string,
     recipeName: string,
     temperature: number,

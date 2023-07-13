@@ -14,6 +14,7 @@ import { NavbarService } from 'src/app/shared/services/navbar.service';
 })
 export class ProfilesComponent {
   personName!: string;
+  personEmail!: string;
   people!: Observable<(Person)[]>;
   peopleSource!: (Person)[];
   constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, public nav: NavbarService,) { }
