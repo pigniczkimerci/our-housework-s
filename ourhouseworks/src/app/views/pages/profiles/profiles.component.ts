@@ -55,7 +55,7 @@ export class ProfilesComponent {
     });
   }
   createPerson() {
-    this.databaseService.addPersonToFirestore(this.personName)
+    this.databaseService.addPersonToFirestore(this.personName, this.personEmail)
       .then(() => {
         console.log("Person added successfully");
       })

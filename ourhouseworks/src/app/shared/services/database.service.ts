@@ -90,8 +90,8 @@ export class DatabaseService {
     );
   }
   
-  addPersonToFirestore(personName: string): Promise<void> {
-    const person = { personName };
+  addPersonToFirestore(personName: string, personEmail: string): Promise<void> {
+    const person = { personName, personEmail };
     return this.addToFirestore(
       this.getPersonCollectionRef(),
       person,
