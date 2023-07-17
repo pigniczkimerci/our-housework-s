@@ -44,7 +44,6 @@ export class SidenavComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isLoginPage = this.router.url === '/login' || this.router.url === '/register';
-        console.log(this.isLoginPage);
       }
     });
   }
@@ -59,6 +58,4 @@ export class SidenavComponent {
       }
     });
   }
-
-
 }
