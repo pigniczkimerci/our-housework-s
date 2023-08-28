@@ -1,6 +1,21 @@
+@import '../../../../styles.scss';
 .name{
     display: flex;
 }
 .new{
     background-color: #fff;
+}
+.fridge{
+    display: flex;
+    flex-direction: row;
+    h2{
+        color: $mat-blue;
+    }
+    .items{
+        background-color: #fff;
+        box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
 }

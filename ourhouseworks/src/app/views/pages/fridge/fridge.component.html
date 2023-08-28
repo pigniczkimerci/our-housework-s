@@ -22,6 +22,7 @@
 </div>
 <div class="fridge" *ngFor="let fridge of fridgeSource">
   <!--<button mat-button (click)="fridgeToJSON()">Export to JSON</button>-->
+  <div class="items">
   <div class="name">
     <h2>{{ fridge.name }}</h2>
     <button mat-icon-button (click)="cooked(fridge)">
@@ -41,4 +42,5 @@
 
     </ul>
   </div>
+</div>
 </div>
