@@ -9,6 +9,7 @@ import { Ingredients } from 'src/app/shared/models/ingredients';
 import { Recipes } from 'src/app/shared/models/recipes';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recipes',
@@ -71,13 +72,31 @@ export class RecipesComponent {
     }
   }
   deleteRecipe(recipe: Recipes) {
-    this.databaseService.deleteRecipeFromFirestore(recipe)
-      .then(() => {
-        console.log("Person deleted successfully");
-      })
-      .catch(() => {
-        console.log("Error deleting person");
-      });
+    Swal.fire({
+      title: 'Are you sure you want to delete this item?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#333',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.databaseService.deleteRecipeFromFirestore(recipe)
+          .then(() => {
+            Swal.fire({
+              title: 'Recipe has been deleted!',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#00616D'
+            })
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error deleting recipe!',
+            })
+          });
+        }
+    })
+   
   }
   addGroup() {
     if (this.groupName) {
@@ -93,6 +112,12 @@ export class RecipesComponent {
       this.databaseService.addRecipeToFirestore(this.recipeName, this.recipePicture, this.description, this.ingredientGroups,this.temperature, this.time)
         .then(() => {
           console.log('Recipe added successfully to Firestore.');
+          Swal.fire({
+            icon: 'success',
+            title: 'Recipe has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
         .catch((error: any) => {
           console.error('Error adding recipe to Firestore: ', error);

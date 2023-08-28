@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { Person } from 'src/app/shared/models/person';
 import { Tasks } from 'src/app/shared/models/task';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-main',
@@ -20,15 +21,15 @@ export class MainComponent implements OnInit {
   date: Date | undefined;
   responsibleMembers!: Observable<Person[]>;
   selectedMember!: Person;
-  
+
   allFieldsFilled: boolean = false;
 
   tableDataSource: Tasks[] = [];
 
   updatedTask!: Tasks;
 
-  constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) {  }
-  
+  constructor(private databaseService: DatabaseService, private firestore: AngularFirestore, private auth: AngularFireAuth, public nav: NavbarService, private datePipe: DatePipe) { }
+
   ngOnInit(): void {
     this.tasks = this.firestore.collectionGroup('task').valueChanges() as Observable<Tasks[]>;
     this.tasks.subscribe((data) => {
@@ -47,6 +48,12 @@ export class MainComponent implements OnInit {
       this.databaseService.addTaskToFirestore(this.taskName, this.date, this.selectedMember)
         .then(() => {
           console.log('Task added successfully to Firestore.');
+          Swal.fire({
+            icon: 'success',
+            title: 'Your task has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
         .catch((error) => {
           console.error('Error adding task to Firestore: ', error);
@@ -55,20 +62,36 @@ export class MainComponent implements OnInit {
       console.error('Invalid task details.');
     }
   }
-  
+
   checkFieldsFilled() {
     this.allFieldsFilled = !!this.taskName && !!this.date && !!this.selectedMember;
   }
   deleteTask(task: Tasks) {
-    this.databaseService.deleteTaskFromFirestore(task)
-      .then(() => {
-        console.log("Task deleted successfully");
-      })
-      .catch((error) => {
-        console.log("Error deleting task");
-      });
+    Swal.fire({
+      title: 'Are you sure you want to delete this task?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#333',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.databaseService.deleteTaskFromFirestore(task)
+          .then(() => {
+            Swal.fire({
+              title: 'Task has been deleted!',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#00616D'
+            })
+          })
+          .catch((error) => {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error deleting task!',
+            })
+          });
+      }
+    })
   }
-
   editTask(task: Tasks) {
     this.databaseService.editTask(task).catch((error) => {
       console.error('Error editing task: ', error);

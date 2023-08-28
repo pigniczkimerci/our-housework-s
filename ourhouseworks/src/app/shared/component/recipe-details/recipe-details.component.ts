@@ -7,6 +7,7 @@ import { Ingredients } from '../../models/ingredients';
 import { Recipes } from '../../models/recipes';
 import { DatabaseService } from '../../services/database.service';
 import { IGroup } from '../../models/i-group';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recipe-details',
@@ -38,7 +39,12 @@ export class RecipeDetailsComponent {
   cookIt(name: string, ing: IGroup[]){
       this.databaseService.addFridgeToFirestore(name, ing)
         .then(() => {
-          console.log('Recipe added successfully to Firestore.');
+          Swal.fire({
+            icon: 'success',
+            title: 'Recipe added successfully to Cart.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
         .catch((error: any) => {
           console.error('Error adding recipe to Firestore: ', error);

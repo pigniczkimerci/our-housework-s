@@ -6,6 +6,7 @@ import { Person } from 'src/app/shared/models/person';
 import { Tasks } from 'src/app/shared/models/task';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profiles',
@@ -58,19 +59,42 @@ export class ProfilesComponent {
     this.databaseService.addPersonToFirestore(this.personName, this.personEmail)
       .then(() => {
         console.log("Person added successfully");
+        Swal.fire({
+          icon: 'success',
+          title: 'Person has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        });
       })
       .catch((error) => {
         console.log("Error adding person");
       });
   }
   deletePerson(person: Person) {
-    this.databaseService.deletePersonFromFirestore(person)
-      .then(() => {
-        console.log("Person deleted successfully");
-      })
-      .catch((error) => {
-        console.log("Error deleting person");
-      });
+    Swal.fire({
+      title: 'Are you sure you want to delete this person?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#333',
+    }).then((result) => {
+      if (result.isConfirmed) {
+      this.databaseService.deletePersonFromFirestore(person)
+        .then(() => {
+          Swal.fire({
+            title: 'Person has been deleted!',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#00616D'
+          })
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: 'error',
+            text: 'Error deleting person!',
+          })
+        });
+      }   
+    })
   }
   convertTimestampToDate(timestamp: any): Date | null {
     if (timestamp && timestamp.toDate) {
@@ -81,10 +105,17 @@ export class ProfilesComponent {
   completedTask(task:Tasks){
     this.databaseService.addTaskToPerson(task.resperson, task)
     .then(() => {
-      this.databaseService.deleteTaskFromFirestore(task);
-      console.log("Task completed");
+      Swal.fire({
+        icon: 'success',
+        title: 'Task completed',
+        showConfirmButton: false,
+        timer: 1500
+      });
     }).catch((error) => {
-      console.log("Error complete task");
+      Swal.fire({
+        icon: 'error',
+        text: 'Error complete task!',
+      })
     });
   }
 }
