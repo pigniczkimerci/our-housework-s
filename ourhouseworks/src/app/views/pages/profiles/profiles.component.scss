@@ -10,6 +10,16 @@ $primaryPalette: mat-palette($mat-indigo);
     box-shadow: 2px 8px 18px -3px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     padding: 20px;
+    
+}
+.person-name{
+    font-weight: bold;
+}
+.statinfos{
+    display: flex;
+}
+.person-card{
+    margin: 20px;
 }
 .new-person button{
     color: $mat-blue;

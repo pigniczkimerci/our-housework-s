@@ -13,24 +13,6 @@
     </div>
     <div class="current-people">
         <h1>Current people</h1>
-        <!--<mat-table [dataSource]="peopleSource">
-            <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-              <mat-cell *matCellDef="let person">{{ person.name }}</mat-cell>
-            </ng-container>
-          
-            <ng-container matColumnDef="delete">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let person">
-                <button mat-icon-button  (click)="deletePerson(person)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-cell>
-            </ng-container>
-          
-            <mat-header-row *matHeaderRowDef="['name', 'delete']"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: ['name', 'delete']"></mat-row>
-          </mat-table>-->
           <div class="person-container">
             <div *ngFor="let person of peopleSource" class="person-card">
               <div class="person-name">{{ person.personName }}</div>
@@ -51,21 +33,19 @@
     </div>
     <div class="stat">
       <h1>Statistics</h1>
-      <div *ngFor="let person of peopleSource" class="person-card">
-        <div class="person-name">{{ person.personName }}</div>
-        <div class="person-tasks">
-          <ul>
-            <li *ngFor="let task of person.doneTask">
-              <span>{{ task.taskName }}</span>
-            </li>
-           <!-- <p>Task completed: {{person.doneTask.length}}</p>
-            <li *ngFor="let task of person.doneTask | keyvalue">
-              <pre>{{ person.doneTask | json }}</pre>
-              <pre>{{ task.value | json }}</pre>
-            </li>-->
-          </ul>
+      <div class="statinfos">
+        <div *ngFor="let person of peopleSource" class="person-card">
+          <div class="person-name">{{ person.personName }}</div>
+          <div class="person-tasks">
+              <div *ngFor="let task of person.doneTask">
+                <span>{{ task.taskName }}</span>
+              </div>
+          </div>
         </div>
       </div>
+      <div class="chart-container">
+      <canvas  id="TaskChart" >{{ chart }}</canvas>
+     </div>
     </div>
 </div>
 <!--<table>

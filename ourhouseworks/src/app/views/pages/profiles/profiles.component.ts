@@ -7,7 +7,7 @@ import { Tasks } from 'src/app/shared/models/task';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { NavbarService } from 'src/app/shared/services/navbar.service';
 import Swal from 'sweetalert2';
-
+import { Chart } from 'chart.js/auto';
 @Component({
   selector: 'app-profiles',
   templateUrl: './profiles.component.html',
@@ -18,9 +18,12 @@ export class ProfilesComponent {
   personEmail!: string;
   people!: Observable<(Person)[]>;
   peopleSource!: (Person)[];
+  chart: any;
+  completedTasks: Map<string, number> | undefined;
   constructor(private databaseService: DatabaseService,private firestore: AngularFirestore, public nav: NavbarService,) { }
 
   ngOnInit(): void {
+    
     const peopleObservable = this.firestore.collectionGroup('people').valueChanges() as Observable<Person[]>;
     const tasksObservable = this.firestore.collectionGroup('task').valueChanges() as Observable<Tasks[]>;
     const combinedObservable = combineLatest([
@@ -50,10 +53,12 @@ export class ProfilesComponent {
         this.peopleSource = people;
       })
     );
+    
     combinedObservable.subscribe();
     setTimeout(() => {
       this.nav.show();
     });
+    this.createChart();
   }
   createPerson() {
     this.databaseService.addPersonToFirestore(this.personName, this.personEmail)
@@ -105,6 +110,7 @@ export class ProfilesComponent {
   completedTask(task:Tasks){
     this.databaseService.addTaskToPerson(task.resperson, task)
     .then(() => {
+      this.databaseService.deleteTaskFromFirestore(task);
       Swal.fire({
         icon: 'success',
         title: 'Task completed',
@@ -116,6 +122,29 @@ export class ProfilesComponent {
         icon: 'error',
         text: 'Error complete task!',
       })
+    });
+  }
+  createChart(){
+    console.log(this.peopleSource)
+    this.chart = new Chart("TaskChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
+								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
+	       datasets: [
+          {
+            label: "Profit",
+            data: ['542', '542', '536', '327', '17',
+									 '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          }  
+        ]
+      },
+      options: {
+        aspectRatio:2.5
+      }
+      
     });
   }
 }
